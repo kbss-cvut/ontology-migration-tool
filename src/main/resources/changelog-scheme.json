@@ -65,6 +65,16 @@
                   "type": "object",
                   "required": ["type", "iri"],
                   "properties": {
+                    "type": { "const": "deleteClass" },
+                    "iri": { "type": "string" },
+                    "graph": {"type":  "string"}
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": ["type", "iri"],
+                  "properties": {
                     "type": { "const": "deleteResource" },
                     "iri": { "type": "string" },
                     "graph": {"type":  "string"}

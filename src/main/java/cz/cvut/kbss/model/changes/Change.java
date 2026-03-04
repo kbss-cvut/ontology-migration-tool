@@ -15,8 +15,9 @@ import cz.cvut.kbss.repository.OntologyRepository;
         @JsonSubTypes.Type(value = RenameResourceChange.class, name = "renameResource"),
         @JsonSubTypes.Type(value = AddClassChange.class, name = "addClass"),
         @JsonSubTypes.Type(value = AddResourceChange.class, name = "addResource"),
-        @JsonSubTypes.Type(value = DeleteResourceChange.class, name = "deleteResource"),
         @JsonSubTypes.Type(value = AddPropertyChange.class, name = "addProperty"),
+        @JsonSubTypes.Type(value = DeleteClassChange.class, name = "deleteClass"),
+        @JsonSubTypes.Type(value = DeleteResourceChange.class, name = "deleteResource"),
         @JsonSubTypes.Type(value = SparqlUpdateChange.class, name = "sparqlUpdate")
 })
 public abstract class Change {

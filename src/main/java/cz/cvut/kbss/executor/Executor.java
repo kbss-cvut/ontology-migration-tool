@@ -7,9 +7,14 @@ import cz.cvut.kbss.model.ChangeSet;
 import cz.cvut.kbss.model.changes.Change;
 import cz.cvut.kbss.repository.OntologyRepository;
 import cz.cvut.kbss.versioning.VersionManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class Executor {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Executor.class);
+
     private final OntologyRepository repository;
     private final VersionManager versionManager;
     private final MigrationLogger logger;
@@ -26,7 +31,7 @@ public class Executor {
         int counter = 0;
         try {
             for (ChangeSet changeSet : changeLog.getChangeSets()) {
-                if(versionManager.isApplied(changeSet.getId())){
+                if (versionManager.isApplied(changeSet.getId())) {
                     logger.logSkip(changeSet.getId());
                     continue;
                 }
@@ -34,6 +39,7 @@ public class Executor {
                 for (Change change : changeSet.getChanges()) {
                     logger.logChange(change.getType(), change.getLogMessage());
                     String sparql = change.apply(repository);
+                    LOG.trace("Executing SPARQL: {}", sparql);
                     repository.update(sparql);
                 }
                 counter++;
@@ -45,7 +51,7 @@ public class Executor {
             logger.logFailed();
             throw new MigrationExecutionException("Failed to execute migration", e);
         }
-    logger.logSuccessfulFinish(counter);
+        logger.logSuccessfulFinish(counter);
     }
 
 }
