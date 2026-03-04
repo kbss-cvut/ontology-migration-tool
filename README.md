@@ -85,6 +85,16 @@ changeSets:
         graph: "http://example.org/TargetGraph"
 ```
 
+### Supported Types of Changes
+
+- renameResource
+- addClass
+- addProperty
+- addResource
+- deleteClass
+- deleteResource
+- sparqlUpdate
+
 ## License
 
 MIT
