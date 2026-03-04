@@ -1,5 +1,5 @@
-import cz.cvut.fel.exceptions.ChangeLogValidationException;
-import cz.cvut.fel.utils.ChangeLogValidator;
+import cz.cvut.kbss.exceptions.ChangeLogValidationException;
+import cz.cvut.kbss.utils.ChangeLogValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,19 +18,17 @@ public class ChangeLogValidatorTest {
     }
 
     @Test
-    void validateCorrectChangeLog() throws Exception {
-        InputStream input = getClass()
-                .getResourceAsStream("/valid-changelog.yaml");
-        assertDoesNotThrow(() -> validator.validate(input));
+    void validateCorrectChangeLog() throws IOException {
+        try (InputStream input = getClass().getResourceAsStream("/valid-changelog.yaml")) {
+            assertDoesNotThrow(() -> validator.validate(input));
+        }
     }
 
     @Test
-    void throwExceptionForInvalidChangeLog() throws Exception {
-        InputStream input = getClass()
-                .getResourceAsStream("/invalid-changelog.yaml");
-        assertThrows(
-                ChangeLogValidationException.class,
-                () -> validator.validate(input)
-        );
+    void throwExceptionForInvalidChangeLog() throws IOException {
+        try (InputStream input = getClass().getResourceAsStream("/invalid-changelog.yaml")) {
+            assertThrows(ChangeLogValidationException.class,() -> validator.validate(input)
+            );
+        }
     }
 }

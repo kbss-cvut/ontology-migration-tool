@@ -1,13 +1,12 @@
 package integration;
 
-import cz.cvut.fel.executor.Executor;
-import cz.cvut.fel.logger.MigrationLogger;
-import cz.cvut.fel.logger.Slf4jMigrationLogger;
-import cz.cvut.fel.model.ChangeLog;
-import cz.cvut.fel.model.ChangeSet;
-import cz.cvut.fel.model.changes.*;
-import cz.cvut.fel.repository.OntologyRepository;
-import cz.cvut.fel.versioning.VersionManager;
+import cz.cvut.kbss.executor.Executor;
+import cz.cvut.kbss.logger.MigrationLogger;
+import cz.cvut.kbss.logger.Slf4jMigrationLogger;
+import cz.cvut.kbss.model.ChangeLog;
+import cz.cvut.kbss.model.ChangeSet;
+import cz.cvut.kbss.model.changes.*;
+import cz.cvut.kbss.versioning.VersionManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

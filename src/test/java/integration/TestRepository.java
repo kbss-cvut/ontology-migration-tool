@@ -1,6 +1,6 @@
 package integration;
 
-import cz.cvut.fel.repository.OntologyRepository;
+import cz.cvut.kbss.repository.OntologyRepository;
 
 import java.util.ArrayList;
 import java.util.List;

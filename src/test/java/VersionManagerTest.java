@@ -1,9 +1,8 @@
-import cz.cvut.fel.repository.OntologyRepository;
-import cz.cvut.fel.versioning.VersionManager;
+import cz.cvut.kbss.repository.OntologyRepository;
+import cz.cvut.kbss.versioning.VersionManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static javax.management.Query.times;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
