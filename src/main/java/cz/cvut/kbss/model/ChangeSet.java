@@ -6,9 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChangeSet {
-    private final String id;
+
+    private String id;
 
     private List<Change> changes = new ArrayList<>();
+
+    public ChangeSet() {
+    }
 
     public ChangeSet(String id) {
         this.id = id;
@@ -16,6 +20,10 @@ public class ChangeSet {
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public List<Change> getChanges() {

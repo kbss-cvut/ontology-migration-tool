@@ -9,17 +9,22 @@ public class Slf4jMigrationLogger implements MigrationLogger {
 
     @Override
     public void logStart() {
-        log.info("Start migration.");
+        log.info("Beginning ontology migration.");
     }
 
     @Override
-    public void logEnd(boolean success) {
-        log.info("Migration finished: {}", success ? "SUCCESS" : "FAILURE");
+    public void logSuccessfulFinish(int appliedCount) {
+        log.info("Ontology migration successfully finished. Applied {} changesets.", appliedCount);
+    }
+
+    @Override
+    public void logFailed() {
+        log.info("Ontology migration failed.");
     }
 
     @Override
     public void logChangeSet(String changeSet) {
-        log.info("Applying ChangeSet: {}", changeSet);
+        log.info("Applying changeset: {}", changeSet);
     }
 
     @Override

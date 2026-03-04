@@ -1,4 +1,4 @@
-import cz.cvut.kbss.exceptions.ChangeLogValidationException;
+import cz.cvut.kbss.exception.ChangeLogValidationException;
 import cz.cvut.kbss.utils.ChangeLogValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

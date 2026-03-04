@@ -1,4 +1,4 @@
-package cz.cvut.kbss.exceptions;
+package cz.cvut.kbss.exception;
 
 import com.networknt.schema.ValidationMessage;
 

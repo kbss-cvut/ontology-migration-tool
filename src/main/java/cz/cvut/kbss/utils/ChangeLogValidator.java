@@ -8,15 +8,19 @@ import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SpecVersion;
 import com.networknt.schema.ValidationMessage;
-import cz.cvut.kbss.exceptions.ChangeLogReadingException;
-import cz.cvut.kbss.exceptions.ChangeLogValidationException;
-import cz.cvut.kbss.exceptions.OntologyMigrationToolException;
+import cz.cvut.kbss.exception.ChangeLogReadingException;
+import cz.cvut.kbss.exception.ChangeLogValidationException;
+import cz.cvut.kbss.exception.OntologyMigrationToolException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Set;
 
 public class ChangeLogValidator {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ChangeLogValidator.class);
 
     private final JsonSchema jsonSchema;
 
@@ -32,6 +36,7 @@ public class ChangeLogValidator {
     }
 
     public void validate(String input) {
+        LOG.debug("Validating changelog against schema.");
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         try {
             final JsonNode changeLogNode = mapper.readTree(input);

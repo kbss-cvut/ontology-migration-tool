@@ -1,6 +1,6 @@
 package cz.cvut.kbss.executor;
 
-import cz.cvut.kbss.exceptions.MigrationExecutionException;
+import cz.cvut.kbss.exception.MigrationExecutionException;
 import cz.cvut.kbss.logger.MigrationLogger;
 import cz.cvut.kbss.model.ChangeLog;
 import cz.cvut.kbss.model.ChangeSet;
@@ -23,6 +23,7 @@ public class Executor {
     public void execute(ChangeLog changeLog) {
         logger.logStart();
         repository.begin();
+        int counter = 0;
         try {
             for (ChangeSet changeSet : changeLog.getChangeSets()) {
                 if(versionManager.isApplied(changeSet.getId())){
@@ -35,16 +36,16 @@ public class Executor {
                     String sparql = change.apply(repository);
                     repository.update(sparql);
                 }
+                counter++;
                 versionManager.markApplied(changeSet.getId());
             }
             repository.commit();
         } catch (Exception e) {
             logger.logError("MIGRATION ERROR", e);
-            logger.logEnd(false);
+            logger.logFailed();
             throw new MigrationExecutionException("Failed to execute migration", e);
         }
-    logger.logEnd(true);
-
+    logger.logSuccessfulFinish(counter);
     }
 
 }

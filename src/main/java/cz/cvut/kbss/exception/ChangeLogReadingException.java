@@ -1,4 +1,4 @@
-package cz.cvut.kbss.exceptions;
+package cz.cvut.kbss.exception;
 
 /**
  * Indicates that the changelog file could not be found or read.

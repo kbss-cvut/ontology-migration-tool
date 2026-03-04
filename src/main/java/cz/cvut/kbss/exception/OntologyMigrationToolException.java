@@ -1,4 +1,4 @@
-package cz.cvut.kbss.exceptions;
+package cz.cvut.kbss.exception;
 
 public class OntologyMigrationToolException extends RuntimeException {
 

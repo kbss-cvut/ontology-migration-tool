@@ -3,7 +3,7 @@ package cz.cvut.kbss.loader;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import cz.cvut.kbss.exceptions.ChangeLogReadingException;
+import cz.cvut.kbss.exception.ChangeLogReadingException;
 import cz.cvut.kbss.model.ChangeLog;
 import cz.cvut.kbss.utils.ChangeLogValidator;
 

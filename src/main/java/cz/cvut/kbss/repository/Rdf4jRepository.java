@@ -21,12 +21,16 @@ public class Rdf4jRepository implements OntologyRepository {
 
     @Override
     public void close() {
+        if (conn != null && conn.isActive()) {
+            conn.rollback();
+            conn.close();
+        }
         repo.shutDown();
     }
 
     @Override
     public void begin() {
-        conn = repo.getConnection();
+        this.conn = repo.getConnection();
         conn.begin();
     }
 

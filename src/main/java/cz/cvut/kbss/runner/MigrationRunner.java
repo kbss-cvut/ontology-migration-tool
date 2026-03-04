@@ -1,6 +1,7 @@
 package cz.cvut.kbss.runner;
 
-import cz.cvut.kbss.exceptions.ChangeLogValidationException;
+import cz.cvut.kbss.exception.ChangeLogValidationException;
+import cz.cvut.kbss.exception.OntologyMigrationToolException;
 import cz.cvut.kbss.executor.Executor;
 import cz.cvut.kbss.loader.ChangeLogLoader;
 import cz.cvut.kbss.logger.MigrationLogger;
@@ -29,7 +30,8 @@ public class MigrationRunner {
             Executor executor = new Executor(repo, logger);
             executor.execute(changeLog);
         } catch (ChangeLogValidationException e) {
-            logger.logError("Cannot load changelog", e);
+            logger.logError("Changelog invalid. Errors: " + e.getErrors(), e);
+            throw new OntologyMigrationToolException(e);
         } finally {
             repo.close();
         }
