@@ -4,7 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Slf4jMigrationLogger implements MigrationLogger {
+
     private static final Logger log = LoggerFactory.getLogger(Slf4jMigrationLogger.class);
+
     @Override
     public void logStart() {
         log.info("Start migration.");

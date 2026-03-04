@@ -32,4 +32,9 @@ public class TestRepository implements OntologyRepository {
     public List<String> getUpdates() {
         return updates;
     }
+
+    @Override
+    public void close() {
+        // Do nothing
+    }
 }
