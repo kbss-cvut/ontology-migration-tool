@@ -7,7 +7,6 @@ public class RenameResourceChange extends Change{
     private String oldName;
     private String newName;
 
-
     public String getOldName() {
         return oldName;
     }

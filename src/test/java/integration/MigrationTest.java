@@ -5,27 +5,27 @@ import cz.cvut.kbss.logger.MigrationLogger;
 import cz.cvut.kbss.logger.Slf4jMigrationLogger;
 import cz.cvut.kbss.model.ChangeLog;
 import cz.cvut.kbss.model.ChangeSet;
-import cz.cvut.kbss.model.changes.*;
-import cz.cvut.kbss.versioning.VersionManager;
+import cz.cvut.kbss.model.changes.AddClassChange;
+import cz.cvut.kbss.model.changes.AddPropertyChange;
+import cz.cvut.kbss.model.changes.AddResourceChange;
+import cz.cvut.kbss.model.changes.DeleteResourceChange;
+import cz.cvut.kbss.model.changes.RenameResourceChange;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MigrationTest {
     private TestRepository repository;
-    private VersionManager versionManager;
     private Executor executor;
-    private MigrationLogger logger;
 
     @BeforeEach
     void setUp() {
         repository = new TestRepository();
-        versionManager = new VersionManager(repository);
-        logger  = new Slf4jMigrationLogger();
+        MigrationLogger logger = new Slf4jMigrationLogger();
         executor = new Executor(repository, logger);
     }
 
@@ -39,7 +39,7 @@ public class MigrationTest {
         ChangeSet cs2 = new ChangeSet("cs-2");
         cs2.setChanges(List.of(
                 new AddPropertyChange("http://ex/p1", "http://ex/o1",
-                        "http://ex/s1", null),
+                                      "http://ex/s1", null),
                 new DeleteResourceChange("http://ex/r2")
         ));
         ChangeSet cs3 = new ChangeSet("cs-3");
@@ -50,17 +50,12 @@ public class MigrationTest {
         ChangeLog log = new ChangeLog();
         log.setChangeSets(List.of(cs1, cs2, cs3));
         executor.execute(log);
-        assertFalse(repository.getUpdates().isEmpty(), "No SPARQL updates applied");
-        assertTrue(repository.getUpdates().stream().anyMatch(s -> s.contains("http://ex/r1")),
-                "AddResourceChange not applied");
-        assertTrue(repository.getUpdates().stream().anyMatch(s -> s.contains("http://ex/C1")),
-                "AddClassChange not applied");
+        assertFalse(repository.getUpdates().isEmpty());
+        assertTrue(repository.getUpdates().stream().anyMatch(s -> s.contains("http://ex/r1")));
+        assertTrue(repository.getUpdates().stream().anyMatch(s -> s.contains("http://ex/C1")));
         assertTrue(repository.getUpdates().stream().anyMatch(s ->
-                s.contains("<http://ex/s1> <http://ex/p1> <http://ex/o1>")), "AddPropertyChange not applied");
-        assertTrue(repository.getUpdates().stream().anyMatch(s -> s.contains("http://ex/old")),
-                "RenameResourceChange not applied");
-        executor.execute(log);
-        assertEquals(repository.getUpdates().size(), repository.getUpdates().size(),
-                "Duplicate changes applied");
+                                                                     s.contains(
+                                                                             "<http://ex/s1> <http://ex/p1> <http://ex/o1>")));
+        assertTrue(repository.getUpdates().stream().anyMatch(s -> s.contains("http://ex/old")));
     }
 }
