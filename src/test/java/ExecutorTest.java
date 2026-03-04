@@ -45,8 +45,8 @@ public class ExecutorTest {
     @Test
     void testRenameResourceChange() {
         RenameResourceChange change = new RenameResourceChange();
-        change.setOldName("http://ex/old");
-        change.setNewName("http://ex/new");
+        change.setOldIri("http://ex/old");
+        change.setNewIri("http://ex/new");
         String sparql = change.apply(repository);
         assertTrue(sparql.contains("DELETE"));
         assertTrue(sparql.contains("INSERT"));
@@ -104,8 +104,8 @@ public class ExecutorTest {
 
     private RenameResourceChange createRenameChange(String oldName, String newName) {
         RenameResourceChange change = new RenameResourceChange();
-        change.setOldName(oldName);
-        change.setNewName(newName);
+        change.setOldIri(oldName);
+        change.setNewIri(newName);
         return change;
     }
 }

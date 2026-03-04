@@ -44,8 +44,8 @@ public class MigrationTest {
         ));
         ChangeSet cs3 = new ChangeSet("cs-3");
         RenameResourceChange renameChange = new RenameResourceChange();
-        renameChange.setOldName("http://ex/old");
-        renameChange.setNewName("http://ex/new");
+        renameChange.setOldIri("http://ex/old");
+        renameChange.setNewIri("http://ex/new");
         cs3.setChanges(List.of(renameChange));
         ChangeLog log = new ChangeLog();
         log.setChangeSets(List.of(cs1, cs2, cs3));

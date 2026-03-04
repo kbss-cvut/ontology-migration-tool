@@ -2,25 +2,25 @@ changeSets:
   - id: cs-001
     changes:
       - type: renameResource
-        oldName: "http://example.org/OldResource"
-        newName: "http://example.org/NewResource"
+        oldIri: "http://example.org/OldResource"
+        newIri: "http://example.org/NewResource"
         graph: "http://example.org/Graph1"
       - type: addClass
-        uri: "http://example.org/NewClass"
+        iri: "http://example.org/NewClass"
         label: "New Class"
         graph: "http://example.org/Graph1"
       - type: addResource
-        uri: "http://example.org/NewResource2"
-        classUri: "http://example.org/NewClass"
+        iri: "http://example.org/NewResource2"
+        classIri: "http://example.org/NewClass"
         label: "Resource 2"
         graph: "http://example.org/Graph2"
       - type: addProperty
-        subjectURI: "http://example.org/NewResource2"
-        propertyURI: "http://example.org/hasProperty"
-        objectURI: "http://example.org/Value"
+        subjectIRI: "http://example.org/NewResource2"
+        propertyIRI: "http://example.org/hasProperty"
+        objectIRI: "http://example.org/Value"
         graph: "http://example.org/Graph2"
       - type: deleteResource
-        uri: "http://example.org/OldResourceToDelete"
+        iri: "http://example.org/OldResourceToDelete"
         graph: "http://example.org/Graph3"
       - type: sparqlUpdate
         query: "DELETE WHERE { ?s ?p ?o }"

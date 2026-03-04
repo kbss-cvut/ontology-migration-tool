@@ -4,14 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.repository.OntologyRepository;
 
 public class  AddClassChange extends Change{
-    @JsonProperty("uri")
-    private String uri;
+    @JsonProperty("iri")
+    private String iri;
 
     @JsonProperty("label")
     private String label;
 
-    public AddClassChange(String uri, String label, String graph) {
-        this.uri = uri;
+    public AddClassChange(String iri, String label, String graph) {
+        this.iri = iri;
         this.label = label;
         this.graph = graph;
     }
@@ -25,10 +25,10 @@ public class  AddClassChange extends Change{
             sb.append("GRAPH <").append(graph).append("> { ");
         }
         sb.append(String.format("<%s> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> " +
-                "<http://www.w3.org/2000/01/rdf-schema#Class> . ", uri));
+                "<http://www.w3.org/2000/01/rdf-schema#Class> . ", iri));
         if(label != null){
             sb.append(String.format("<%s> <http://www.w3.org/2000/01/rdf-schema#label>" +
-                    " \"%s\" . ", uri, label));
+                    " \"%s\" . ", iri, label));
         }
         if(graph!=null && !graph.isBlank()){
             sb.append("}");
@@ -39,6 +39,6 @@ public class  AddClassChange extends Change{
 
     @Override
     public String getLogMessage() {
-        return String.format("Class added: %s", uri);
+        return String.format("Class added: %s", iri);
     }
 }

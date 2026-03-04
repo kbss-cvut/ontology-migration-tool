@@ -17,21 +17,21 @@
               "oneOf": [
                 {
                   "type": "object",
-                  "required": ["type", "oldName", "newName"],
+                  "required": ["type", "oldIri", "newIri"],
                   "properties": {
                     "type": { "const": "renameResource" },
-                    "oldName": { "type": "string" },
-                    "newName": { "type": "string" },
+                    "oldIri": { "type": "string" },
+                    "newIri": { "type": "string" },
                     "graph": {"type":  "string"}
                   },
                   "additionalProperties": false
                 },
                 {
                   "type": "object",
-                  "required": ["type", "uri"],
+                  "required": ["type", "iri"],
                   "properties": {
                     "type": { "const": "addClass" },
-                    "uri": { "type": "string" },
+                    "iri": { "type": "string" },
                     "label": { "type": "string" },
                     "graph": {"type":  "string"}
                   },
@@ -39,11 +39,11 @@
                 },
                 {
                   "type": "object",
-                  "required": ["type", "uri"],
+                  "required": ["type", "iri"],
                   "properties": {
                     "type": { "const": "addResource" },
-                    "uri": { "type": "string" },
-                    "classUri": { "type": "string" },
+                    "iri": { "type": "string" },
+                    "classIri": { "type": "string" },
                     "label": { "type": "string" },
                     "graph": {"type":  "string"}
                   },
@@ -51,22 +51,22 @@
                 },
                 {
                   "type": "object",
-                  "required": ["type", "propertyURI"],
+                  "required": ["type", "propertyIRI"],
                   "properties": {
                     "type": { "const": "addProperty" },
-                    "subjectURI": { "type": "string" },
-                    "propertyURI": { "type": "string" },
-                    "objectURI": { "type": "string" },
+                    "subjectIRI": { "type": "string" },
+                    "propertyIRI": { "type": "string" },
+                    "objectIRI": { "type": "string" },
                     "graph": {"type":  "string"}
                   },
                   "additionalProperties": false
                 },
                 {
                   "type": "object",
-                  "required": ["type", "uri"],
+                  "required": ["type", "iri"],
                   "properties": {
                     "type": { "const": "deleteResource" },
-                    "uri": { "type": "string" },
+                    "iri": { "type": "string" },
                     "graph": {"type":  "string"}
                   },
                   "additionalProperties": false

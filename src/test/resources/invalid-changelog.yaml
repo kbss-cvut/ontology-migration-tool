@@ -2,6 +2,6 @@ changeSets:
   - id: cs-002
     changes:
       - type: renameResource
-        oldName: "http://example.org/OldResource"
+        oldIri: "http://example.org/OldResource"
       - type: addClass
         label: "Missing URI"

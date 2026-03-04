@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.repository.OntologyRepository;
 
 public class DeleteResourceChange extends Change{
-    @JsonProperty("uri")
-    private String uri;
-    public DeleteResourceChange(String uri) {
-        this.uri = uri;
+    @JsonProperty("iri")
+    private String iri;
+    public DeleteResourceChange(String iri) {
+        this.iri = iri;
     }
     public DeleteResourceChange(){}
 
@@ -21,11 +21,11 @@ public class DeleteResourceChange extends Change{
                             "DELETE WHERE { GRAPH ?g { ?s <%s> ?o } }; " +
                             "DELETE WHERE { ?s <%s> ?o }"
                     ,
-                    uri, uri, uri, uri, uri, uri
+                    iri, iri, iri, iri, iri, iri
             );
     }
     @Override
     public String getLogMessage() {
-        return String.format("Resource deleted: %s", uri);
+        return String.format("Resource deleted: %s", iri);
     }
 }

@@ -4,16 +4,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.repository.OntologyRepository;
 
 public class AddResourceChange extends Change{
-    @JsonProperty("uri")
-    private String uri;
-    @JsonProperty("classUri")
-    private String classUri;
+    @JsonProperty("iri")
+    private String iri;
+    @JsonProperty("classIri")
+    private String classIri;
     @JsonProperty("label")
     private String label;
 
-    public AddResourceChange(String uri, String classUri, String label) {
-        this.uri = uri;
-        this.classUri = classUri;
+    public AddResourceChange(String iri, String classIri, String label) {
+        this.iri = iri;
+        this.classIri = classIri;
         this.label = label;
     }
     public AddResourceChange(){}
@@ -25,11 +25,11 @@ public class AddResourceChange extends Change{
         if(graph != null && !graph.isBlank()){
             sb.append("GRAPH <").append(graph).append("> { ");
         }
-        if (classUri != null) {
-            sb.append(String.format("<%s> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <%s> . ", uri, classUri));
+        if (classIri != null) {
+            sb.append(String.format("<%s> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <%s> . ", iri, classIri));
         }
         if (label != null) {
-            sb.append(String.format("<%s> <http://www.w3.org/2000/01/rdf-schema#label> \"%s\" . ", uri, label));
+            sb.append(String.format("<%s> <http://www.w3.org/2000/01/rdf-schema#label> \"%s\" . ", iri, label));
         }
         if(graph!=null && !graph.isBlank()){
             sb.append("}");
@@ -40,6 +40,6 @@ public class AddResourceChange extends Change{
 
     @Override
     public String getLogMessage() {
-        return String.format("Resource added: %s", uri);
+        return String.format("Resource added: %s", iri);
     }
 }

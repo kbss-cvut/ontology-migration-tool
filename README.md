@@ -35,19 +35,22 @@ initializer. This ensures it is executed before the other application beans are 
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class OntologyMigrationInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+public class OntologyMigrationInitializer 
+        implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     @Override
     public void initialize(@Nonnull ConfigurableApplicationContext appContext) {
         // Use environment to retrieve repository URL, username, password
-        final String repoUrl = appContext.getEnvironment().getRequiredProperty("repository.url");
-        final String repoUsername = appContext.getEnvironment().getProperty("repository.username");
-        final String repoPassword = appContext.getEnvironment().getProperty("repository.password");
+        Environment env = appContext.getEnvironment();
+        String repoUrl = env.getRequiredProperty("repository.url");
+        String repoUsername = env.getProperty("repository.username");
+        String repoPassword = env.getProperty("repository.password");
 
         // Create the migration runner
-        final MigrationRunner runner = MigrationRunner.repository(repoUrl)
-                                                      .username(repoUsername).password(repoPassword)
-                                                      .build();
+        MigrationRunner runner = MigrationRunner.repository(repoUrl)
+                                                .username(repoUsername)
+                                                .password(repoPassword)
+                                                .build();
         // Run migration
         runner.run();
     }
@@ -62,10 +65,24 @@ public class OntologyMigrationInitializer implements ApplicationContextInitializ
 public class Application {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(Application.class).initializers(new OntologyMigrationInitializer())
-                                                       .run(args);
+        new SpringApplicationBuilder(Application.class)
+                .initializers(new OntologyMigrationInitializer())
+                .run(args);
     }
 }
+```
+
+A `changelog.yaml` file (a different name/path can be configured when creating the `MigrationRunner`) should be accessible
+on classpath. The structure of the file should correspond to `src/main/resources/changelog-scheme.json`, so for example:
+
+```yaml
+changeSets:
+  - id: 1
+    changes:
+      - type: renameResource
+        oldIri: "http://example.org/OldResource"
+        newIri: "http://example.org/NewResource"
+        graph: "http://example.org/TargetGraph"
 ```
 
 ## License

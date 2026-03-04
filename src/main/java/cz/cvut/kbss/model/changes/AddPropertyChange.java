@@ -5,22 +5,22 @@ import cz.cvut.kbss.repository.OntologyRepository;
 
 public class AddPropertyChange extends Change {
 
-    @JsonProperty("propertyURI")
-    private String propertyURI;
+    @JsonProperty("propertyIRI")
+    private String propertyIRI;
 
-    @JsonProperty("objectURI")
-    private String objectURI;
+    @JsonProperty("objectIRI")
+    private String objectIRI;
 
-    @JsonProperty("subjectURI")
-    private String subjectURI;
+    @JsonProperty("subjectIRI")
+    private String subjectIRI;
 
     public AddPropertyChange(){}
 
-    public AddPropertyChange(String propertyURI, String objectURI, String subjectURI,
+    public AddPropertyChange(String propertyIRI, String objectIRI, String subjectIRI,
                              String graph) {
-        this.propertyURI = propertyURI;
-        this.objectURI = objectURI;
-        this.subjectURI = subjectURI;
+        this.propertyIRI = propertyIRI;
+        this.objectIRI = objectIRI;
+        this.subjectIRI = subjectIRI;
         this.graph = graph;
     }
 
@@ -31,8 +31,8 @@ public class AddPropertyChange extends Change {
         if(graph != null && !graph.isBlank()){
             sb.append("GRAPH <").append(graph).append("> { ");
         }
-        if(subjectURI != null && propertyURI != null && objectURI != null){
-            sb.append(String.format("<%s> <%s> <%s> . ", subjectURI, propertyURI, objectURI));
+        if(subjectIRI != null && propertyIRI != null && objectIRI != null){
+            sb.append(String.format("<%s> <%s> <%s> . ", subjectIRI, propertyIRI, objectIRI));
         }
         if(graph!=null && !graph.isBlank()){
             sb.append("}");
@@ -44,7 +44,7 @@ public class AddPropertyChange extends Change {
 
     @Override
     public String getLogMessage() {
-        return String.format("Property added: <%s> <%s> <%s>", subjectURI, propertyURI, objectURI);
+        return String.format("Property added: <%s> <%s> <%s>", subjectIRI, propertyIRI, objectIRI);
     }
 
 
