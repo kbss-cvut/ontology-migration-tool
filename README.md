@@ -87,13 +87,14 @@ changeSets:
 
 ### Supported Types of Changes
 
-- renameResource
-- addClass
-- addProperty
-- addResource
-- deleteClass
-- deleteResource
-- sparqlUpdate
+- `renameResource`
+- `addClass`
+- `addProperty`
+- `addResource`
+- `deleteClass`
+- `deleteResource`
+- `sparqlUpdate` - directly executes specified SPARQL Update
+- `importFromUrl` - imports RDF data from the specified URL
 
 ## License
 
