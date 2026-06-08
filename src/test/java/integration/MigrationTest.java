@@ -5,11 +5,11 @@ import cz.cvut.kbss.logger.MigrationLogger;
 import cz.cvut.kbss.logger.Slf4jMigrationLogger;
 import cz.cvut.kbss.model.ChangeLog;
 import cz.cvut.kbss.model.ChangeSet;
-import cz.cvut.kbss.model.changes.AddClassChange;
-import cz.cvut.kbss.model.changes.AddPropertyChange;
-import cz.cvut.kbss.model.changes.AddResourceChange;
-import cz.cvut.kbss.model.changes.DeleteResourceChange;
-import cz.cvut.kbss.model.changes.RenameResourceChange;
+import cz.cvut.kbss.model.change.AddClassChange;
+import cz.cvut.kbss.model.change.AddPropertyChange;
+import cz.cvut.kbss.model.change.AddResourceChange;
+import cz.cvut.kbss.model.change.DeleteResourceChange;
+import cz.cvut.kbss.model.change.RenameResourceChange;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

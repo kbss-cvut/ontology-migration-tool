@@ -1,6 +1,6 @@
 package cz.cvut.kbss.model;
 
-import cz.cvut.kbss.model.changes.Change;
+import cz.cvut.kbss.model.change.Change;
 
 import java.util.ArrayList;
 import java.util.List;

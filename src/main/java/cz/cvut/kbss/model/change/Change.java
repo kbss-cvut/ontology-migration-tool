@@ -1,4 +1,4 @@
-package cz.cvut.kbss.model.changes;
+package cz.cvut.kbss.model.change;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;

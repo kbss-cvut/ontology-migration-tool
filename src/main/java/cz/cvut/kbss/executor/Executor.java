@@ -4,7 +4,7 @@ import cz.cvut.kbss.exception.MigrationExecutionException;
 import cz.cvut.kbss.logger.MigrationLogger;
 import cz.cvut.kbss.model.ChangeLog;
 import cz.cvut.kbss.model.ChangeSet;
-import cz.cvut.kbss.model.changes.Change;
+import cz.cvut.kbss.model.change.Change;
 import cz.cvut.kbss.repository.OntologyRepository;
 import cz.cvut.kbss.versioning.VersionManager;
 import org.slf4j.Logger;
