@@ -18,7 +18,8 @@ import cz.cvut.kbss.repository.OntologyRepository;
         @JsonSubTypes.Type(value = DeleteClassChange.class, name = "deleteClass"),
         @JsonSubTypes.Type(value = DeleteResourceChange.class, name = "deleteResource"),
         @JsonSubTypes.Type(value = SparqlUpdateChange.class, name = "sparqlUpdate"),
-        @JsonSubTypes.Type(value = ImportFromUrlChange.class, name = "importFromUrl")
+        @JsonSubTypes.Type(value = ImportFromUrlChange.class, name = "importFromUrl"),
+        @JsonSubTypes.Type(value = CustomChangeApplier.class, name = "custom")
 })
 public abstract class Change {
 

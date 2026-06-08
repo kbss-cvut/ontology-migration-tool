@@ -100,6 +100,15 @@
                     "replace": {"type": "boolean"}
                   },
                   "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": ["class"],
+                  "properties": {
+                    "type": { "const": "custom" },
+                    "class": { "type": "string" }
+                  },
+                  "additionalProperties": false
                 }
               ]
             }

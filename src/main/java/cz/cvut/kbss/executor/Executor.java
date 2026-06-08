@@ -31,6 +31,7 @@ public class Executor {
         int counter = 0;
         try {
             for (ChangeSet changeSet : changeLog.getChangeSets()) {
+                LOG.trace("Processing change set {}.", changeSet.getId());
                 if (versionManager.isApplied(changeSet.getId())) {
                     logger.logSkip(changeSet.getId());
                     continue;

@@ -95,6 +95,7 @@ changeSets:
 - `deleteResource`
 - `sparqlUpdate` - directly executes specified SPARQL Update
 - `importFromUrl` - imports RDF data from the specified URL
+- `custom` - executes a custom change (Java implementation)
 
 ## License
 
