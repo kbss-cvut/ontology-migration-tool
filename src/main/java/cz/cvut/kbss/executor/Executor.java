@@ -5,7 +5,7 @@ import cz.cvut.kbss.logger.MigrationLogger;
 import cz.cvut.kbss.model.ChangeLog;
 import cz.cvut.kbss.model.ChangeSet;
 import cz.cvut.kbss.model.change.Change;
-import cz.cvut.kbss.repository.OntologyRepository;
+import cz.cvut.kbss.repository.TransactionalRepository;
 import cz.cvut.kbss.versioning.VersionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,11 +15,11 @@ public class Executor {
 
     private static final Logger LOG = LoggerFactory.getLogger(Executor.class);
 
-    private final OntologyRepository repository;
+    private final TransactionalRepository repository;
     private final VersionManager versionManager;
     private final MigrationLogger logger;
 
-    public Executor(OntologyRepository repository, MigrationLogger logger) {
+    public Executor(TransactionalRepository repository, MigrationLogger logger) {
         this.repository = repository;
         this.versionManager = new VersionManager(repository);
         this.logger = logger;

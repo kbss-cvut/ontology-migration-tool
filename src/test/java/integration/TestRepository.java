@@ -1,13 +1,13 @@
 package integration;
 
-import cz.cvut.kbss.repository.OntologyRepository;
+import cz.cvut.kbss.repository.TransactionalRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestRepository implements OntologyRepository {
+public class TestRepository implements TransactionalRepository {
     private boolean transactionActive = false;
     private final List<String> updates = new ArrayList<>();
 
@@ -39,10 +39,12 @@ public class TestRepository implements OntologyRepository {
 
     @Override
     public void clearGraph(String graph) {
+        assertTrue(transactionActive);
     }
 
     @Override
     public void importFromUrl(String url, String graph) {
+        assertTrue(transactionActive);
     }
 
     public List<String> getUpdates() {

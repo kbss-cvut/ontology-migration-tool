@@ -16,7 +16,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 
-public class Rdf4jRepository implements OntologyRepository {
+public class Rdf4jRepository implements TransactionalRepository {
 
     private static final Logger LOG = LoggerFactory.getLogger(Rdf4jRepository.class);
 

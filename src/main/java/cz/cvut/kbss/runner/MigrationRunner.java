@@ -7,14 +7,14 @@ import cz.cvut.kbss.loader.ChangeLogLoader;
 import cz.cvut.kbss.logger.MigrationLogger;
 import cz.cvut.kbss.logger.Slf4jMigrationLogger;
 import cz.cvut.kbss.model.ChangeLog;
-import cz.cvut.kbss.repository.OntologyRepository;
+import cz.cvut.kbss.repository.TransactionalRepository;
 import cz.cvut.kbss.repository.RepositoryFactory;
 
 import java.util.Objects;
 
 public class MigrationRunner {
 
-    private final OntologyRepository repo;
+    private final TransactionalRepository repo;
     private final ChangeLogLoader loader;
     private final MigrationLogger logger;
 

@@ -1,4 +1,4 @@
-import cz.cvut.kbss.repository.OntologyRepository;
+import cz.cvut.kbss.repository.TransactionalRepository;
 import cz.cvut.kbss.versioning.VersionManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,12 +9,12 @@ import static org.mockito.Mockito.*;
 
 
 public class VersionManagerTest {
-    private OntologyRepository repository;
+    private TransactionalRepository repository;
     private VersionManager versionManager;
 
     @BeforeEach
     void setUp() {
-        repository = mock(OntologyRepository.class);
+        repository = mock(TransactionalRepository.class);
         versionManager = new VersionManager(repository);
     }
 

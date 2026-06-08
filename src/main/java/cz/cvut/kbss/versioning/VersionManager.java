@@ -1,15 +1,15 @@
 package cz.cvut.kbss.versioning;
 
-import cz.cvut.kbss.repository.OntologyRepository;
+import cz.cvut.kbss.repository.TransactionalRepository;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 public class VersionManager {
-    private final OntologyRepository repository;
+    private final TransactionalRepository repository;
     private static final String CONTEXT = "http://onto.fel.cvut.cz/ontologies/ontology-migration-tool/versions";
 
-    public VersionManager(OntologyRepository repository) {
+    public VersionManager(TransactionalRepository repository) {
         this.repository = repository;
     }
 
