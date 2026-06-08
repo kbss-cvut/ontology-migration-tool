@@ -38,9 +38,7 @@ public class Executor {
                 logger.logChangeSet(changeSet.getId());
                 for (Change change : changeSet.getChanges()) {
                     logger.logChange(change.getType(), change.getLogMessage());
-                    String sparql = change.apply(repository);
-                    LOG.trace("Executing SPARQL: {}", sparql);
-                    repository.update(sparql);
+                    change.apply(repository);
                 }
                 counter++;
                 versionManager.markApplied(changeSet.getId());

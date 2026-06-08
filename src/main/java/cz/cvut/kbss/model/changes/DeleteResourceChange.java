@@ -15,14 +15,19 @@ public class DeleteResourceChange extends Change {
     }
 
     @Override
-    public String apply(OntologyRepository repository) {
+    public void apply(OntologyRepository repository) {
+        final String update = deleteQuery();
+        repository.update(update);
+    }
+
+    String deleteQuery() {
         return String.format("DELETE WHERE { GRAPH ?g { <%s> ?p ?o } }; " +
-                        "DELETE WHERE { GRAPH ?g { ?s ?p <%s> } }; " +
-                        "DELETE WHERE { GRAPH ?g { ?s <%s> ?o } }; " +
-                        "DELETE WHERE { <%s> ?p ?o }; " +
-                        "DELETE WHERE { ?s <%s> ?o }; " +
-                        "DELETE WHERE { ?s ?p <%s> }",
-                iri, iri, iri, iri, iri, iri
+                                     "DELETE WHERE { GRAPH ?g { ?s ?p <%s> } }; " +
+                                     "DELETE WHERE { GRAPH ?g { ?s <%s> ?o } }; " +
+                                     "DELETE WHERE { <%s> ?p ?o }; " +
+                                     "DELETE WHERE { ?s <%s> ?o }; " +
+                                     "DELETE WHERE { ?s ?p <%s> }",
+                             iri, iri, iri, iri, iri, iri
         );
     }
 

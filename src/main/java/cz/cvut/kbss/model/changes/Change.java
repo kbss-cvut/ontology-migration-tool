@@ -36,7 +36,7 @@ public abstract class Change {
         return this.getClass().getSimpleName();
     }
 
-    public abstract String apply(OntologyRepository repository);
+    public abstract void apply(OntologyRepository repository);
 
     public abstract String getLogMessage();
 }

@@ -24,7 +24,7 @@ public class RenameResourceChange extends Change{
     }
 
     @Override
-    public String apply(OntologyRepository repository) {
+    public void apply(OntologyRepository repository) {
         String sparqlPropertyWog = String.format("""
                 DELETE { ?s <%s> ?o }
                 INSERT { ?s <%s> ?o }
@@ -65,7 +65,7 @@ public class RenameResourceChange extends Change{
                 INSERT { ?s ?p <%s> }
                 WHERE  { ?s ?p <%s> }
                 """, oldIri, newIri, oldIri);
-        return sparqlPropertyWg + ";\n" +
+        final String update = sparqlPropertyWg + ";\n" +
                 sparqlSubjectWg + ";\n" +
                 sparqlTypeWg + ";\n" +
                 sparqlObjectWg + ";\n" +
@@ -73,6 +73,8 @@ public class RenameResourceChange extends Change{
                 sparqlSubjectWog + ";\n" +
                 sparqlTypeWog + ";\n" +
                 sparqlObjectWog;
+
+        repository.update(update);
     }
 
     @Override

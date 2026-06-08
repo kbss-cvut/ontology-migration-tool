@@ -14,7 +14,8 @@ public class AddPropertyChange extends Change {
     @JsonProperty("subjectIRI")
     private String subjectIRI;
 
-    public AddPropertyChange(){}
+    public AddPropertyChange() {
+    }
 
     public AddPropertyChange(String propertyIRI, String objectIRI, String subjectIRI,
                              String graph) {
@@ -25,21 +26,21 @@ public class AddPropertyChange extends Change {
     }
 
     @Override
-    public String apply(OntologyRepository repository) { //TODO переписать
+    public void apply(OntologyRepository repository) {
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT DATA { ");
-        if(graph != null && !graph.isBlank()){
+        if (graph != null && !graph.isBlank()) {
             sb.append("GRAPH <").append(graph).append("> { ");
         }
-        if(subjectIRI != null && propertyIRI != null && objectIRI != null){
+        if (subjectIRI != null && propertyIRI != null && objectIRI != null) {
             sb.append(String.format("<%s> <%s> <%s> . ", subjectIRI, propertyIRI, objectIRI));
         }
-        if(graph!=null && !graph.isBlank()){
+        if (graph != null && !graph.isBlank()) {
             sb.append("}");
         }
         sb.append(" }");
 
-        return sb.toString();
+        repository.update(sb.toString());
     }
 
     @Override

@@ -1,9 +1,16 @@
 package cz.cvut.kbss.repository;
 
 public interface OntologyRepository {
+
     void begin();
-    void update(String sparql);
+
     void commit();
-    boolean ask(String sparql);
+
     void close();
+
+    void update(String sparql);
+
+    boolean ask(String sparql);
+
+    void importFromUrl(String url, String context);
 }

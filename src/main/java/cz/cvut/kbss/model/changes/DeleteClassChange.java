@@ -19,11 +19,12 @@ public class DeleteClassChange extends Change {
     }
 
     @Override
-    public String apply(OntologyRepository repository) {
-        return String.format("DELETE WHERE { ?x a <%s> . ?x ?y ?z . ?zz ?yy ?x . };" +
-                                     "DELETE WHERE { ?x a <%s> . GRAPH ?g { ?x ?y ?z . } GRAPH ?gg { ?zz ?yy ?x . } };",
-                             iri, iri
-        ) + new DeleteResourceChange(iri).apply(repository);
+    public void apply(OntologyRepository repository) {
+        final String update = String.format("DELETE WHERE { ?x a <%s> . ?x ?y ?z . ?zz ?yy ?x . };" +
+                                                    "DELETE WHERE { ?x a <%s> . GRAPH ?g { ?x ?y ?z . } GRAPH ?gg { ?zz ?yy ?x . } };",
+                                            iri, iri
+        ) + new DeleteResourceChange(iri).deleteQuery();
+        repository.update(update);
     }
 
     @Override
