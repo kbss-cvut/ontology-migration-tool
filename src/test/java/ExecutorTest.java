@@ -7,6 +7,7 @@ import cz.cvut.kbss.model.changes.AddPropertyChange;
 import cz.cvut.kbss.model.changes.AddResourceChange;
 import cz.cvut.kbss.model.changes.Change;
 import cz.cvut.kbss.model.changes.DeleteResourceChange;
+import cz.cvut.kbss.model.changes.ImportFromUrlChange;
 import cz.cvut.kbss.model.changes.RenameResourceChange;
 import cz.cvut.kbss.model.changes.SparqlUpdateChange;
 import integration.TestRepository;
@@ -106,6 +107,24 @@ public class ExecutorTest {
         final String sparql = repository.getUpdates().get(0);
         assertTrue(sparql.contains("DELETE"));
         assertTrue(change.getLogMessage().contains("DELETE"));
+    }
+
+    @Test
+    void importFromUrlChangePassesSourceUrlAndTargetGraphToRepository() {
+        final String ontoIri = "http://example.com/ontology";
+        final ImportFromUrlChange change = new ImportFromUrlChange(ontoIri, ontoIri);
+        repository.begin();
+        change.apply(repository);
+        verify(repository).importFromUrl(ontoIri, ontoIri);
+    }
+
+    @Test
+    void importFromUrlPassesNullAsTargetGraphWhenItIsNotSpecified() {
+        final String ontoIri = "http://example.com/ontology";
+        final ImportFromUrlChange change = new ImportFromUrlChange(ontoIri, null);
+        repository.begin();
+        change.apply(repository);
+        verify(repository).importFromUrl(ontoIri, null);
     }
 
     @Test

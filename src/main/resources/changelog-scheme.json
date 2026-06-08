@@ -89,6 +89,16 @@
                     "query": { "type": "string" }
                   },
                   "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": ["sourceUrl"],
+                  "properties": {
+                    "type": { "const": "importFromUrl" },
+                    "sourceUrl": {"type": "string"},
+                    "graph": {"type": "string"}
+                  },
+                  "additionalProperties": false
                 }
               ]
             }

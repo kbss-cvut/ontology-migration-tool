@@ -17,14 +17,19 @@ public class TestRepository implements OntologyRepository {
     }
 
     @Override
-    public void update(String sparql) {
-        assertTrue(transactionActive);
-        updates.add(sparql);
+    public void commit() {
+        transactionActive = false;
     }
 
     @Override
-    public void commit() {
-        transactionActive = false;
+    public void close() {
+        // Do nothing
+    }
+
+    @Override
+    public void update(String sparql) {
+        assertTrue(transactionActive);
+        updates.add(sparql);
     }
 
     @Override
@@ -32,12 +37,12 @@ public class TestRepository implements OntologyRepository {
         return updates.contains(sparql);
     }
 
-    public List<String> getUpdates() {
-        return updates;
+    @Override
+    public void importFromUrl(String url, String context) {
+
     }
 
-    @Override
-    public void close() {
-        // Do nothing
+    public List<String> getUpdates() {
+        return updates;
     }
 }
