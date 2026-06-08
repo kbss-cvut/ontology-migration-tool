@@ -11,17 +11,24 @@ public class ImportFromUrlChange extends Change {
     @JsonProperty("graph")
     private String graph;
 
+    @JsonProperty("replace")
+    private boolean replace;
+
     public ImportFromUrlChange() {
     }
 
-    public ImportFromUrlChange(String sourceUrl, String graph) {
+    public ImportFromUrlChange(String sourceUrl, String graph, boolean replace) {
         this.sourceUrl = sourceUrl;
         this.graph = graph;
+        this.replace = replace;
     }
 
     @Override
     public void apply(OntologyRepository repository) {
         String targetGraph = graph == null || graph.isBlank() ? null : graph;
+        if (replace && targetGraph != null) {
+            repository.clearGraph(targetGraph);
+        }
         repository.importFromUrl(sourceUrl, targetGraph);
     }
 

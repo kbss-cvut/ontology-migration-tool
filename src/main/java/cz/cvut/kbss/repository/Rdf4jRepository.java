@@ -67,12 +67,21 @@ public class Rdf4jRepository implements OntologyRepository {
     }
 
     @Override
-    public void importFromUrl(String url, String context) {
-        try (RepositoryConnection c = repo.getConnection()) {
-            if (context != null) {
-                c.add(new URL(url), Values.iri(context));
+    public void clearGraph(String graph) {
+        assert conn != null && conn.isActive();
+        LOG.trace("Clearing repository context <{}>", graph);
+        conn.clear(Values.iri(graph));
+    }
+
+    @Override
+    public void importFromUrl(String url, String graph) {
+        assert conn != null && conn.isActive();
+        LOG.trace("Importing data from <{}> into repository context <{}>", url, graph);
+        try {
+            if (graph != null) {
+                conn.add(new URL(url), Values.iri(graph));
             } else {
-                c.add(new URL(url));
+                conn.add(new URL(url));
             }
         } catch (MalformedURLException e) {
             throw new IllegalArgumentException("Invalid URL: " + url, e);

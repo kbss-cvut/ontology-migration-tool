@@ -12,5 +12,7 @@ public interface OntologyRepository {
 
     boolean ask(String sparql);
 
-    void importFromUrl(String url, String context);
+    void clearGraph(String graph);
+
+    void importFromUrl(String url, String graph);
 }

@@ -96,7 +96,8 @@
                   "properties": {
                     "type": { "const": "importFromUrl" },
                     "sourceUrl": {"type": "string"},
-                    "graph": {"type": "string"}
+                    "graph": {"type": "string"},
+                    "replace": {"type": "boolean"}
                   },
                   "additionalProperties": false
                 }

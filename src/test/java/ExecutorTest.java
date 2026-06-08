@@ -112,7 +112,7 @@ public class ExecutorTest {
     @Test
     void importFromUrlChangePassesSourceUrlAndTargetGraphToRepository() {
         final String ontoIri = "http://example.com/ontology";
-        final ImportFromUrlChange change = new ImportFromUrlChange(ontoIri, ontoIri);
+        final ImportFromUrlChange change = new ImportFromUrlChange(ontoIri, ontoIri, false);
         repository.begin();
         change.apply(repository);
         verify(repository).importFromUrl(ontoIri, ontoIri);
@@ -121,10 +121,20 @@ public class ExecutorTest {
     @Test
     void importFromUrlPassesNullAsTargetGraphWhenItIsNotSpecified() {
         final String ontoIri = "http://example.com/ontology";
-        final ImportFromUrlChange change = new ImportFromUrlChange(ontoIri, null);
+        final ImportFromUrlChange change = new ImportFromUrlChange(ontoIri, null, false);
         repository.begin();
         change.apply(repository);
         verify(repository).importFromUrl(ontoIri, null);
+    }
+
+    @Test
+    void importFromUrlClearsTargetGraphWhenReplaceIsSpecified() {
+        final String ontoIri = "http://example.com/ontology";
+        final ImportFromUrlChange change = new ImportFromUrlChange(ontoIri, ontoIri, true);
+        repository.begin();
+        change.apply(repository);
+        verify(repository).clearGraph(ontoIri);
+        verify(repository).importFromUrl(ontoIri, ontoIri);
     }
 
     @Test

@@ -38,8 +38,11 @@ public class TestRepository implements OntologyRepository {
     }
 
     @Override
-    public void importFromUrl(String url, String context) {
+    public void clearGraph(String graph) {
+    }
 
+    @Override
+    public void importFromUrl(String url, String graph) {
     }
 
     public List<String> getUpdates() {
