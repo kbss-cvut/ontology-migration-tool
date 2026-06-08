@@ -1,10 +1,14 @@
 package cz.cvut.kbss.model.change;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.repository.OntologyRepository;
 
 
 public class RenameResourceChange extends Change {
+    @JsonProperty("oldIri")
     private String oldIri;
+
+    @JsonProperty("newIri")
     private String newIri;
 
     public RenameResourceChange() {
