@@ -10,6 +10,9 @@ public class AddClassChange extends Change {
     @JsonProperty("label")
     private String label;
 
+    @JsonProperty("graph")
+    protected String graph;
+
     public AddClassChange() {
     }
 

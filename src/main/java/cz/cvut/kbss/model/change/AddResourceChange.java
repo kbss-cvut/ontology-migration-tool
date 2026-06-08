@@ -6,10 +6,15 @@ import cz.cvut.kbss.repository.OntologyRepository;
 public class AddResourceChange extends Change {
     @JsonProperty("iri")
     private String iri;
+
     @JsonProperty("classIri")
     private String classIri;
+
     @JsonProperty("label")
     private String label;
+
+    @JsonProperty("graph")
+    protected String graph;
 
     public AddResourceChange() {
     }

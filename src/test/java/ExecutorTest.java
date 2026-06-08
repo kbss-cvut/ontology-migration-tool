@@ -60,9 +60,7 @@ public class ExecutorTest {
 
     @Test
     void testRenameResourceChange() {
-        RenameResourceChange change = new RenameResourceChange();
-        change.setOldIri("http://ex/old");
-        change.setNewIri("http://ex/new");
+        RenameResourceChange change = new RenameResourceChange("http://ex/old", "http://ex/new");
         repository.begin();
         change.apply(repository);
         assertEquals(1, repository.getUpdates().size());
@@ -142,7 +140,7 @@ public class ExecutorTest {
         List<Change> changes = List.of(
                 new AddResourceChange("http://ex/r1", "http://ex/C1", "Label1"),
                 new DeleteResourceChange("http://ex/r2"),
-                createRenameChange("http://ex/old", "http://ex/new"),
+                new RenameResourceChange("http://ex/old", "http://ex/new"),
                 new AddClassChange("http://ex/C2", "Label2", null),
                 new AddPropertyChange("http://ex/p", "http://ex/o", "http://ex/s", null),
                 new SparqlUpdateChange("DELETE { ?s ?p ?o } WHERE { ?s ?p ?o }")
@@ -156,12 +154,5 @@ public class ExecutorTest {
         verify(repository).begin();
         verify(repository, atLeast(changes.size())).update(anyString());
         verify(repository).commit();
-    }
-
-    private RenameResourceChange createRenameChange(String oldName, String newName) {
-        RenameResourceChange change = new RenameResourceChange();
-        change.setOldIri(oldName);
-        change.setNewIri(newName);
-        return change;
     }
 }

@@ -8,6 +8,9 @@ public class ImportFromUrlChange extends Change {
     @JsonProperty("sourceUrl")
     private String sourceUrl;
 
+    @JsonProperty("graph")
+    protected String graph;
+
     @JsonProperty("replace")
     private boolean replace;
 

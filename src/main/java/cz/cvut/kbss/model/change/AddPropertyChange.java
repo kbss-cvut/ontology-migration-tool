@@ -14,6 +14,9 @@ public class AddPropertyChange extends Change {
     @JsonProperty("subjectIRI")
     private String subjectIRI;
 
+    @JsonProperty("graph")
+    protected String graph;
+
     public AddPropertyChange() {
     }
 

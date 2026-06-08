@@ -1,6 +1,5 @@
 package cz.cvut.kbss.model.change;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -22,12 +21,6 @@ import cz.cvut.kbss.repository.OntologyRepository;
         @JsonSubTypes.Type(value = ImportFromUrlChange.class, name = "importFromUrl")
 })
 public abstract class Change {
-    @JsonProperty("graph")
-    protected String graph;
-
-    public String getGraph() {
-        return graph;
-    }
 
     public String getType() {
         JsonTypeName annotation = this.getClass().getAnnotation(JsonTypeName.class);
