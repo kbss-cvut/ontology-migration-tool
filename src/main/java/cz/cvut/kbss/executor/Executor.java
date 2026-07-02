@@ -27,10 +27,10 @@ public class Executor {
 
     public void execute(ChangeLog changeLog) {
         logger.logStart();
-        repository.begin();
         int counter = 0;
         try {
             for (ChangeSet changeSet : changeLog.getChangeSets()) {
+                repository.begin();
                 LOG.trace("Processing change set {}.", changeSet.getId());
                 if (versionManager.isApplied(changeSet.getId())) {
                     logger.logSkip(changeSet.getId());
@@ -43,8 +43,8 @@ public class Executor {
                 }
                 counter++;
                 versionManager.markApplied(changeSet.getId());
+                repository.commit();
             }
-            repository.commit();
         } catch (Exception e) {
             logger.logError("MIGRATION ERROR", e);
             logger.logFailed();

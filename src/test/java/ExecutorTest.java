@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -154,5 +155,19 @@ public class ExecutorTest {
         verify(repository).begin();
         verify(repository, atLeast(changes.size())).update(anyString());
         verify(repository).commit();
+    }
+
+    @Test
+    void eachChangeSetIsAppliedInSeparateTransaction() {
+        ChangeSet cs1 = new ChangeSet("cs-1");
+        cs1.setChanges(List.of(new AddResourceChange("http://ex/r1", "http://ex/C1", "Label1")));
+        ChangeSet cs2 = new ChangeSet("cs-2");
+        cs2.setChanges(List.of(new AddResourceChange("http://ex/r2", "http://ex/C2", "Label2")));
+        ChangeLog log = new ChangeLog();
+        log.setChangeSets(List.of(cs1, cs2));
+        when(repository.ask(anyString())).thenReturn(false);
+        executor.execute(log);
+        verify(repository, times(2)).begin();
+        verify(repository, times(2)).commit();
     }
 }
