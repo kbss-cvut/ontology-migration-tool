@@ -55,6 +55,7 @@ public class Rdf4jRepository implements TransactionalRepository {
     public void update(String sparql) {
         LOG.trace("Executing SPARQL Update: {}", sparql);
         Update upd = conn.prepareUpdate(sparql);
+        upd.setIncludeInferred(false);
         upd.execute();
     }
 

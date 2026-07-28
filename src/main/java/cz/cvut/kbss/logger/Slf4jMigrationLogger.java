@@ -34,7 +34,7 @@ public class Slf4jMigrationLogger implements MigrationLogger {
 
     @Override
     public void logSkip(String changeSet) {
-        log.info("Skipping already applied changeSet: {}", changeSet);
+        log.debug("Skipping already applied changeSet: {}", changeSet);
     }
 
     @Override
