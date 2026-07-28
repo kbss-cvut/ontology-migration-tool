@@ -23,6 +23,17 @@ Via Maven:
 </dependency>
 ```
 
+from the [KBSS Maven repository](https://kbss.felk.cvut.cz/m2repo/).
+
+```xml
+<repositories>
+    <repository>
+        <id>kbss</id>
+        <url>https://kbss.felk.cvut.cz/m2repo</url>
+    </repository>
+</repositories>
+```
+
 ## Usage
 
 Assuming the target application is a Spring Boot application, the migration tool can be run as
