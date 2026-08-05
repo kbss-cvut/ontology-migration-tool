@@ -52,6 +52,12 @@ public class Rdf4jRepository implements TransactionalRepository {
     }
 
     @Override
+    public void rollback() {
+        conn.rollback();
+        conn.close();
+    }
+
+    @Override
     public void update(String sparql) {
         LOG.trace("Executing SPARQL Update: {}", sparql);
         Update upd = conn.prepareUpdate(sparql);

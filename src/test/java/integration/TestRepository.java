@@ -22,6 +22,11 @@ public class TestRepository implements TransactionalRepository {
     }
 
     @Override
+    public void rollback() {
+        transactionActive = false;
+    }
+
+    @Override
     public void close() {
         // Do nothing
     }

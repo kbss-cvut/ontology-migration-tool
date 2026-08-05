@@ -6,5 +6,7 @@ public interface TransactionalRepository extends OntologyRepository {
 
     void commit();
 
+    void rollback();
+
     void close();
 }

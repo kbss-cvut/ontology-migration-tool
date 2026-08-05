@@ -34,6 +34,7 @@ public class Executor {
                 LOG.trace("Processing change set {}.", changeSet.getId());
                 if (versionManager.isApplied(changeSet.getId())) {
                     logger.logSkip(changeSet.getId());
+                    repository.rollback();
                     continue;
                 }
                 logger.logChangeSet(changeSet.getId());
