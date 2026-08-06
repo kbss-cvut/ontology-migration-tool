@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.repository.OntologyRepository;
 
 /**
- * Deletes a class and all its instances.
+ * Deletes a class identified by {@link #iri} from the given {@link #graph}.
+ * Deletes all instances of the class and all data related to those instances.
  */
 public class DeleteClassChange extends ChangeWithGraph {
 
@@ -34,6 +35,6 @@ public class DeleteClassChange extends ChangeWithGraph {
 
     @Override
     public String getLogMessage() {
-        return String.format("Resource deleted: %s", iri);
+        return String.format("Class and all instances deleted: %s", iri);
     }
 }

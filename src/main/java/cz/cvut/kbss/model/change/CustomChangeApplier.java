@@ -7,6 +7,12 @@ import cz.cvut.kbss.repository.OntologyRepository;
 
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * Executes a user-provided Java change implementation.
+ * <p>
+ * Loads the class specified by {@link #className}, instantiates it with a no-arg constructor,
+ * and applies it as a {@link CustomChange}.
+ */
 public class CustomChangeApplier extends Change {
 
     @JsonProperty("class")

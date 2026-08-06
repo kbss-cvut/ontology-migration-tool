@@ -3,6 +3,9 @@ package cz.cvut.kbss.model.change;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.repository.OntologyRepository;
 
+/**
+ * Creates a new statement {@code <subjectIRI> <propertyIRI> <objectIRI>} in the target graph.
+ */
 public class AddPropertyChange extends ChangeWithGraph {
 
     @JsonProperty("propertyIRI")

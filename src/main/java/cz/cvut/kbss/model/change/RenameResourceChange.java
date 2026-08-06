@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * Renames a resource from {@link #oldIri} to {@link #newIri} in the given {@link #graph}.
+ * <p>
+ * Rewrites triples where the old IRI appears as subject, predicate, or object.
+ */
 public class RenameResourceChange extends ChangeWithGraph {
     @JsonProperty("oldIri")
     private String oldIri;

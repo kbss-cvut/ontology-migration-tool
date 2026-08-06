@@ -3,6 +3,12 @@ package cz.cvut.kbss.model.change;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.repository.OntologyRepository;
 
+/**
+ * Imports RDF data from {@link #sourceUrl} into the given {@link #graph}.
+ * <p>
+ * When {@link #replace} is enabled and a target graph is specified, the graph is cleared
+ * before import.
+ */
 public class ImportFromUrlChange extends ChangeWithGraph {
 
     @JsonProperty("sourceUrl")
