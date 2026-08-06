@@ -40,7 +40,7 @@ public class MigrationTest {
         cs2.setChanges(List.of(
                 new AddPropertyChange("http://ex/p1", "http://ex/o1",
                                       "http://ex/s1", null),
-                new DeleteResourceChange("http://ex/r2")
+                new DeleteResourceChange("http://ex/r2", null)
         ));
         ChangeSet cs3 = new ChangeSet("cs-3");
         RenameResourceChange renameChange = new RenameResourceChange("http://ex/old", "http://ex/new", "http://ex/graph");

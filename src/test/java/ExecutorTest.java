@@ -50,7 +50,7 @@ public class ExecutorTest {
 
     @Test
     void testDeleteResourceChange() {
-        DeleteResourceChange change = new DeleteResourceChange("http://ex/r2");
+        DeleteResourceChange change = new DeleteResourceChange("http://ex/r2", null);
         repository.begin();
         change.apply(repository);
         assertEquals(1, repository.getUpdates().size());
@@ -140,7 +140,7 @@ public class ExecutorTest {
     void testExecutorWithAllChanges() {
         List<Change> changes = List.of(
                 new AddResourceChange("http://ex/r1", "http://ex/C1", "Label1"),
-                new DeleteResourceChange("http://ex/r2"),
+                new DeleteResourceChange("http://ex/r2", null),
                 new RenameResourceChange("http://ex/old", "http://ex/new", null),
                 new AddClassChange("http://ex/C2", "Label2", null),
                 new AddPropertyChange("http://ex/p", "http://ex/o", "http://ex/s", null),
