@@ -3,6 +3,11 @@ package cz.cvut.kbss.model.change;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.repository.OntologyRepository;
 
+/**
+ * Deletes a resource identified by {@link #iri} from the given {@link #graph}.
+ * <p>
+ * Removes matching triples where the resource appears as subject, predicate, or object.
+ */
 public class DeleteResourceChange extends ChangeWithGraph {
     @JsonProperty("iri")
     private String iri;

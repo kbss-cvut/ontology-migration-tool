@@ -3,6 +3,12 @@ package cz.cvut.kbss.model.change;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.repository.OntologyRepository;
 
+/**
+ * Creates a new resource with the given {@link #iri} in the given {@link #graph}.
+ * <p>
+ * Optionally inserts the resource type using {@link #classIri} and a human-readable label
+ * using {@link #label}.
+ */
 public class AddResourceChange extends ChangeWithGraph {
     @JsonProperty("iri")
     private String iri;

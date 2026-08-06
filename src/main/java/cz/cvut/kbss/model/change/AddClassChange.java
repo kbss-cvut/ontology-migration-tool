@@ -3,6 +3,12 @@ package cz.cvut.kbss.model.change;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.repository.OntologyRepository;
 
+/**
+ * Creates a new class with the given {@link #label} in the given {@link #graph}.
+ * <p>
+ * Inserts the given {@link #iri} as an instance of {@link org.eclipse.rdf4j.model.vocabulary.RDFS#CLASS RDFS Class}
+ * with the given {@link #label} as {@link org.eclipse.rdf4j.model.vocabulary.RDFS#LABEL RDFS Label}.
+ */
 public class AddClassChange extends ChangeWithGraph {
     @JsonProperty("iri")
     private String iri;

@@ -3,6 +3,9 @@ package cz.cvut.kbss.model.change;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.repository.OntologyRepository;
 
+/**
+ * Executes a raw SPARQL update query stored in {@link #query}.
+ */
 public class SparqlUpdateChange extends Change {
     @JsonProperty("query")
     private String query;
