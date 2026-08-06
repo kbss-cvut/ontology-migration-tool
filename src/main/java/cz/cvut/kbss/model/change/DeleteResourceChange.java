@@ -3,14 +3,16 @@ package cz.cvut.kbss.model.change;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.repository.OntologyRepository;
 
-public class DeleteResourceChange extends Change {
+public class DeleteResourceChange extends ChangeWithGraph {
     @JsonProperty("iri")
     private String iri;
 
     public DeleteResourceChange() {
+        super();
     }
 
-    public DeleteResourceChange(String iri) {
+    public DeleteResourceChange(String iri, String graph) {
+        super(graph);
         this.iri = iri;
     }
 
@@ -21,14 +23,19 @@ public class DeleteResourceChange extends Change {
     }
 
     String deleteQuery() {
-        return String.format("DELETE WHERE { GRAPH ?g { <%s> ?p ?o } }; " +
-                                     "DELETE WHERE { GRAPH ?g { ?s ?p <%s> } }; " +
-                                     "DELETE WHERE { GRAPH ?g { ?s <%s> ?o } }; " +
-                                     "DELETE WHERE { <%s> ?p ?o }; " +
-                                     "DELETE WHERE { ?s <%s> ?o }; " +
-                                     "DELETE WHERE { ?s ?p <%s> }",
-                             iri, iri, iri, iri, iri, iri
-        );
+        if (isGraphSpecified()) {
+            return String.format("DELETE WHERE { GRAPH <%1$s> { <%2$s> ?p ?o } }; " +
+                                         "DELETE WHERE { GRAPH <%1$s> { ?s ?p <%2$s> } }; ", graph, iri);
+        }
+        return
+                buildSparqlDeleteForAllGraphs("<%1$s> ?p ?o", iri) +
+                buildSparqlDeleteForAllGraphs("?s <%1$s> ?o", iri) +
+                buildSparqlDeleteForAllGraphs("?s ?p <%1$s>", iri);
+    }
+
+    String buildSparqlDeleteForAllGraphs(String matchPattern, String iri) {
+        return String.format("DELETE WHERE { " + matchPattern + " }; " +
+                "DELETE WHERE { GRAPH ?g { " + matchPattern + " } }; ", iri);
     }
 
     @Override
