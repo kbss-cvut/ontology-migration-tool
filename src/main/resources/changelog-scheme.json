@@ -2,125 +2,284 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Changelog Schema",
   "type": "object",
-  "required": ["changeSets"],
+  "required": ["changelog"],
   "properties": {
-    "changeSets": {
+    "changelog": {
       "type": "array",
       "items": {
-        "type": "object",
-        "required": ["id", "changes"],
-        "properties": {
-          "id": { "type": ["string", "number"] },
-          "changes": {
-            "type": "array",
-            "items": {
-              "oneOf": [
-                {
-                  "type": "object",
-                  "required": ["type", "oldIri", "newIri"],
-                  "properties": {
-                    "type": { "const": "renameResource" },
-                    "oldIri": { "type": "string" },
-                    "newIri": { "type": "string" },
-                    "graph": {"type":  "string"}
-                  },
-                  "additionalProperties": false
-                },
-                {
-                  "type": "object",
-                  "required": ["type", "iri"],
-                  "properties": {
-                    "type": { "const": "addClass" },
-                    "iri": { "type": "string" },
-                    "label": { "type": "string" },
-                    "graph": {"type":  "string"}
-                  },
-                  "additionalProperties": false
-                },
-                {
-                  "type": "object",
-                  "required": ["type", "iri"],
-                  "properties": {
-                    "type": { "const": "addResource" },
-                    "iri": { "type": "string" },
-                    "classIri": { "type": "string" },
-                    "label": { "type": "string" },
-                    "graph": {"type":  "string"}
-                  },
-                  "anyOf": [
-                    { "required": ["classIri"] },
-                    { "required": ["label"] }
-                  ],
-                  "additionalProperties": false
-                },
-                {
-                  "type": "object",
-                  "required": ["type", "subjectIRI", "propertyIRI", "objectIRI"],
-                  "properties": {
-                    "type": { "const": "addProperty" },
-                    "subjectIRI": { "type": "string" },
-                    "propertyIRI": { "type": "string" },
-                    "objectIRI": { "type": "string" },
-                    "graph": {"type":  "string"}
-                  },
-                  "additionalProperties": false
-                },
-                {
-                  "type": "object",
-                  "required": ["type", "iri"],
-                  "properties": {
-                    "type": { "const": "deleteClass" },
-                    "iri": { "type": "string" },
-                    "graph": {"type":  "string"}
-                  },
-                  "additionalProperties": false
-                },
-                {
-                  "type": "object",
-                  "required": ["type", "iri"],
-                  "properties": {
-                    "type": { "const": "deleteResource" },
-                    "iri": { "type": "string" },
-                    "graph": {"type":  "string"}
-                  },
-                  "additionalProperties": false
-                },
-                {
-                  "type": "object",
-                  "required": ["type", "query"],
-                  "properties": {
-                    "type": { "const": "sparqlUpdate" },
-                    "query": { "type": "string" }
-                  },
-                  "additionalProperties": false
-                },
-                {
-                  "type": "object",
-                  "required": ["sourceUrl"],
-                  "properties": {
-                    "type": { "const": "importFromUrl" },
-                    "sourceUrl": {"type": "string"},
-                    "graph": {"type": "string"},
-                    "replace": {"type": "boolean"}
-                  },
-                  "additionalProperties": false
-                },
-                {
-                  "type": "object",
-                  "required": ["class"],
-                  "properties": {
-                    "type": { "const": "custom" },
-                    "class": { "type": "string" }
-                  },
-                  "additionalProperties": false
-                }
-              ]
-            }
+        "oneOf": [
+          {
+            "$ref": "#/$defs/changeSetWrapper"
+          },
+          {
+            "$ref": "#/$defs/fileIncludeWrapper"
           }
-        },
-        "additionalProperties": false
-      }
+        ]
+      },
+      "additionalProperties": false
     }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "$defs": {
+    "changeSetWrapper": {
+      "type": "object",
+      "required": ["changeSet"],
+      "properties": {
+        "changeSet": {
+          "$ref": "#/$defs/changeSet"
+        }
+      },
+      "additionalProperties": false
+    },
+    "changeSet": {
+      "type": "object",
+      "required": [
+        "id",
+        "changes"
+      ],
+      "properties": {
+        "id": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/change"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "fileIncludeWrapper": {
+      "type": "object",
+      "required": [
+        "include"
+      ],
+      "properties": {
+        "include": {
+          "$ref": "#/$defs/fileInclude"
+        }
+      },
+      "additionalProperties": false
+    },
+    "fileInclude": {
+      "type": "object",
+      "required": ["file"],
+      "properties": {
+        "file": {
+          "type": "string"
+        },
+        "relativeToChangelogFile": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "change": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "oldIri",
+            "newIri"
+          ],
+          "properties": {
+            "type": {
+              "const": "renameResource"
+            },
+            "oldIri": {
+              "type": "string"
+            },
+            "newIri": {
+              "type": "string"
+            },
+            "graph": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "iri"
+          ],
+          "properties": {
+            "type": {
+              "const": "addClass"
+            },
+            "iri": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "graph": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "iri"
+          ],
+          "properties": {
+            "type": {
+              "const": "addResource"
+            },
+            "iri": {
+              "type": "string"
+            },
+            "classIri": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "graph": {
+              "type": "string"
+            }
+          },
+          "anyOf": [
+            {
+              "required": [
+                "classIri"
+              ]
+            },
+            {
+              "required": [
+                "label"
+              ]
+            }
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "subjectIRI",
+            "propertyIRI",
+            "objectIRI"
+          ],
+          "properties": {
+            "type": {
+              "const": "addProperty"
+            },
+            "subjectIRI": {
+              "type": "string"
+            },
+            "propertyIRI": {
+              "type": "string"
+            },
+            "objectIRI": {
+              "type": "string"
+            },
+            "graph": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "iri"
+          ],
+          "properties": {
+            "type": {
+              "const": "deleteClass"
+            },
+            "iri": {
+              "type": "string"
+            },
+            "graph": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "iri"
+          ],
+          "properties": {
+            "type": {
+              "const": "deleteResource"
+            },
+            "iri": {
+              "type": "string"
+            },
+            "graph": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "query"
+          ],
+          "properties": {
+            "type": {
+              "const": "sparqlUpdate"
+            },
+            "query": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "sourceUrl"
+          ],
+          "properties": {
+            "type": {
+              "const": "importFromUrl"
+            },
+            "sourceUrl": {
+              "type": "string"
+            },
+            "graph": {
+              "type": "string"
+            },
+            "replace": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "class"
+          ],
+          "properties": {
+            "type": {
+              "const": "custom"
+            },
+            "class": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
 }
