@@ -87,26 +87,46 @@ A `changelog.yaml` file (a different name/path can be configured when creating t
 on classpath. The structure of the file should correspond to `src/main/resources/changelog-scheme.json`, so for example:
 
 ```yaml
-changeSets:
-  - id: 1
-    changes:
-      - type: renameResource
-        oldIri: "http://example.org/OldResource"
-        newIri: "http://example.org/NewResource"
-        graph: "http://example.org/TargetGraph"
+# Add comments to your files as you like
+changelog:
+  - changeSet:
+      id: First change set
+      changes:
+        - type: renameResource
+          oldIri: "http://example.org/OldResource"
+          newIri: "http://example.org/NewResource"
+          graph: "http://example.org/TargetGraph"
+  
+  - include:
+      file: file/to/include/changelog.yaml
+      relativeToChangelogFile: true
+```
+
+Be careful with includes to not create a loop.
+
+Include supports files containing a single changelog (see example above)
+or a single change set:
+```yaml
+changeSet:
+  id: Single change set
+  changes:
+    - type: renameResource
+      oldIri: "http://example.org/OldResource"
+      newIri: "http://example.org/NewResource"
+      graph: "http://example.org/TargetGraph"
 ```
 
 ### Supported Types of Changes
 
-- `renameResource`
-- `addClass`
-- `addProperty`
-- `addResource`
-- `deleteClass`
-- `deleteResource`
-- `sparqlUpdate` - directly executes specified SPARQL Update
-- `importFromUrl` - imports RDF data from the specified URL
-- `custom` - executes a custom change (Java implementation)
+- [`renameResource`](./src/main/java/cz/cvut/kbss/model/change/RenameResourceChange.java) - Renames a resource, rewrites triples where the old IRI appears as subject, predicate or object.
+- [`addClass`](./src/main/java/cz/cvut/kbss/model/change/AddClassChange.java) - Creates a new class, optionally with the given label
+- [`addProperty`](./src/main/java/cz/cvut/kbss/model/change/AddPropertyChange.java) - Creates a new statement subject-predicate-object
+- [`addResource`](./src/main/java/cz/cvut/kbss/model/change/AddResourceChange.java) - Creates a new resource with given iri, requires either `classIri` or `label`
+- [`deleteClass`](./src/main/java/cz/cvut/kbss/model/change/DeleteClassChange.java) - Deletes the specified class, all its instances and all related data
+- [`deleteResource`](./src/main/java/cz/cvut/kbss/model/change/DeleteResourceChange.java) - Deletes the specified resource and all related data
+- [`sparqlUpdate`](./src/main/java/cz/cvut/kbss/model/change/SparqlUpdateChange.java) - directly executes specified SPARQL Update
+- [`importFromUrl`](./src/main/java/cz/cvut/kbss/model/change/ImportFromUrlChange.java) - Imports RDF data from the specified URL
+- [`custom`](./src/main/java/cz/cvut/kbss/model/change/custom/CustomChange.java) - Executes a custom change (Java implementation)
 
 ## License
 
