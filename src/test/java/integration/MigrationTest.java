@@ -43,7 +43,7 @@ public class MigrationTest {
                 new DeleteResourceChange("http://ex/r2")
         ));
         ChangeSet cs3 = new ChangeSet("cs-3");
-        RenameResourceChange renameChange = new RenameResourceChange("http://ex/old", "http://ex/new");
+        RenameResourceChange renameChange = new RenameResourceChange("http://ex/old", "http://ex/new", "http://ex/graph");
         cs3.setChanges(List.of(renameChange));
         ChangeLog log = new ChangeLog();
         log.setChangeSets(List.of(cs1, cs2, cs3));
@@ -55,5 +55,6 @@ public class MigrationTest {
                                                                      s.contains(
                                                                              "<http://ex/s1> <http://ex/p1> <http://ex/o1>")));
         assertTrue(repository.getUpdates().stream().anyMatch(s -> s.contains("http://ex/old")));
+        assertTrue(repository.getUpdates().stream().anyMatch(s -> s.contains("GRAPH <http://ex/graph>")));
     }
 }
