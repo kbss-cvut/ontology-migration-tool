@@ -3,11 +3,13 @@ package cz.cvut.kbss.model.change;
 import cz.cvut.kbss.exception.InvalidCustomChangeException;
 import cz.cvut.kbss.model.change.custom.CustomChange;
 import cz.cvut.kbss.repository.OntologyRepository;
+import cz.cvut.kbss.stub.InsertTripleCustomChange;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class CustomChangeApplierTest {
+class CustomChangeApplierTest extends AbstractChangeIntegrationTest{
 
     @Test
     void applyInstantiatesCustomChangeAndCallsApply() {
@@ -51,5 +53,13 @@ class CustomChangeApplierTest {
         public void apply(OntologyRepository repository) {
 
         }
+    }
+
+    @Test
+    void appliesRealCustomChangeAgainstRepository() {
+        applyAndCommit(new CustomChangeApplier(InsertTripleCustomChange.class.getName()));
+
+        assertTrue(askTriple(InsertTripleCustomChange.SUBJECT, InsertTripleCustomChange.PREDICATE,
+                InsertTripleCustomChange.OBJECT));
     }
 }

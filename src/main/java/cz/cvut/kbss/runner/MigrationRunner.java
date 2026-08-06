@@ -7,8 +7,8 @@ import cz.cvut.kbss.loader.ChangeLogLoader;
 import cz.cvut.kbss.logger.MigrationLogger;
 import cz.cvut.kbss.logger.Slf4jMigrationLogger;
 import cz.cvut.kbss.model.ChangeLog;
-import cz.cvut.kbss.repository.TransactionalRepository;
 import cz.cvut.kbss.repository.RepositoryFactory;
+import cz.cvut.kbss.repository.TransactionalRepository;
 
 import java.util.Objects;
 

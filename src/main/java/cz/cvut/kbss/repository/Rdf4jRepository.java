@@ -30,6 +30,18 @@ public class Rdf4jRepository implements TransactionalRepository {
         this.repo = r;
     }
 
+    /**
+     * Wraps an already configured {@link Repository}
+     *
+     * @param repo the repository to wrap
+     */
+    public Rdf4jRepository(Repository repo) {
+        this.repo = repo;
+        if (!repo.isInitialized()) {
+            repo.init();
+        }
+    }
+
     @Override
     public void close() {
         if (conn != null && conn.isActive()) {
