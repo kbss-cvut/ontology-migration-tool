@@ -1,0 +1,15 @@
+
+
+# this
+# file
+
+# as well
+# has comments
+
+# This is a file in nested directory with direct changeSet usage
+changeSet:
+  id: nested-changeset-change
+  changes:
+    - type: renameResource
+      oldIri: "http://example.org/old-resource"
+      newIri: "http://example.org/new-resource"

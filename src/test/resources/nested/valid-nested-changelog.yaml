@@ -1,0 +1,32 @@
+# This File
+# Also
+
+# Starting with empty lines
+
+# and comments
+changelog:
+  - changeSet:
+      id: direct Change Set
+      changes:
+        # changeset with a change directly in changelog
+        - type: deleteResource
+          iri: "http://example.org/ResourceToDelete"
+
+  - include: # include changeSet
+      file: subdirectory/nested-changeset.yaml
+      relativeToChangelogFile: true
+  # second changeset to verify include is inserted at its ordered place
+  - include: # include changelog
+      file: subdirectory/nested-changelog.yaml
+      relativeToChangelogFile: true
+
+  - changeSet:
+      id: second direct change set
+      changes:
+        - type: sparqlUpdate
+          query: "INSERT DATA { <http://ex/subject> a <http://ex/class> }"
+
+  - include:
+      file: valid-changelog.yaml
+      # non-relative path, including from root dir
+

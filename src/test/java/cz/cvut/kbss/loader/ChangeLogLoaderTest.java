@@ -62,4 +62,20 @@ class ChangeLogLoaderTest {
                     .orElseGet(() -> fail("Change of type " + type.getSimpleName() + " not found"));
         }
     }
+
+    @Test
+    void loadValidChangelogWithIncludesLoadsAllIncludesInSingleChangelog() {
+        ChangeLogLoader loader = new ChangeLogLoader("nested/valid-nested-changelog.yaml");
+        final ChangeLog changeLog = assertDoesNotThrow(loader::loadChangelog);
+        assertNotNull(changeLog);
+
+        final int expectedChangeSetCount = 6;
+        assertEquals(expectedChangeSetCount, changeLog.getChangeSets().size());
+
+        final int expectedChangeCount = 2 + // directly in nested/valid-nested-changelog.yaml
+                1 + // nested/subdirectory/nested-changeset.yaml
+                2 + // nested/subdirectory/nested-changelog.yaml
+                9; // valid-changelog.yaml
+        assertEquals(expectedChangeCount, changeLog.getChangeSets().stream().map(ChangeSet::getChanges).mapToLong(List::size).sum());
+    }
 }

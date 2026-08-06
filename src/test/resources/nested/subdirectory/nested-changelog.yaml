@@ -1,0 +1,10 @@
+changelog:
+  - changeSet:
+      id: direct Change Set from nested changelog
+      changes:
+        - type: deleteResource
+          iri: "http://example.org/ResourceToDelete"
+
+  - include:
+      file: nested-changeset.yaml
+      relativeToChangelogFile: true
