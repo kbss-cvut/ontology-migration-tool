@@ -16,4 +16,20 @@ public class ChangeLogValidationException extends OntologyMigrationToolException
     public Set<ValidationMessage> getErrors() {
         return errors;
     }
+
+    /**
+     * Returns the detail message string of this throwable.
+     *
+     * @return the detail message string of this {@code Throwable} instance
+     * (which may be {@code null}).
+     */
+    @Override
+    public String getMessage() {
+        StringBuilder sb = new StringBuilder(super.getMessage())
+                .append(" Errors:\n");
+        for (ValidationMessage error : errors) {
+            sb.append(" - ").append(error.getMessage()).append("\n");
+        }
+        return sb.toString();
+    }
 }
