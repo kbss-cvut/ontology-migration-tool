@@ -47,11 +47,15 @@
                     "label": { "type": "string" },
                     "graph": {"type":  "string"}
                   },
+                  "anyOf": [
+                    { "required": ["classIri"] },
+                    { "required": ["label"] }
+                  ],
                   "additionalProperties": false
                 },
                 {
                   "type": "object",
-                  "required": ["type", "propertyIRI"],
+                  "required": ["type", "subjectIRI", "propertyIRI", "objectIRI"],
                   "properties": {
                     "type": { "const": "addProperty" },
                     "subjectIRI": { "type": "string" },
