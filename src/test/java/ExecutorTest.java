@@ -37,7 +37,7 @@ public class ExecutorTest {
 
     @Test
     void testAddResourceChange() {
-        AddResourceChange change = new AddResourceChange("http://ex/r1", "http://ex/C1", "Label1");
+        AddResourceChange change = new AddResourceChange("http://ex/r1", "http://ex/C1", "Label1", null);
         repository.begin();
         change.apply(repository);
         assertEquals(1, repository.getUpdates().size());
@@ -139,7 +139,7 @@ public class ExecutorTest {
     @Test
     void testExecutorWithAllChanges() {
         List<Change> changes = List.of(
-                new AddResourceChange("http://ex/r1", "http://ex/C1", "Label1"),
+                new AddResourceChange("http://ex/r1", "http://ex/C1", "Label1", null),
                 new DeleteResourceChange("http://ex/r2", null),
                 new RenameResourceChange("http://ex/old", "http://ex/new", null),
                 new AddClassChange("http://ex/C2", "Label2", null),
@@ -160,9 +160,9 @@ public class ExecutorTest {
     @Test
     void eachChangeSetIsAppliedInSeparateTransaction() {
         ChangeSet cs1 = new ChangeSet("cs-1");
-        cs1.setChanges(List.of(new AddResourceChange("http://ex/r1", "http://ex/C1", "Label1")));
+        cs1.setChanges(List.of(new AddResourceChange("http://ex/r1", "http://ex/C1", "Label1", null)));
         ChangeSet cs2 = new ChangeSet("cs-2");
-        cs2.setChanges(List.of(new AddResourceChange("http://ex/r2", "http://ex/C2", "Label2")));
+        cs2.setChanges(List.of(new AddResourceChange("http://ex/r2", "http://ex/C2", "Label2", null)));
         ChangeLog log = new ChangeLog();
         log.setChangeSets(List.of(cs1, cs2));
         when(repository.ask(anyString())).thenReturn(false);

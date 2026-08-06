@@ -3,7 +3,7 @@ package cz.cvut.kbss.model.change;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.repository.OntologyRepository;
 
-public class AddResourceChange extends Change {
+public class AddResourceChange extends ChangeWithGraph {
     @JsonProperty("iri")
     private String iri;
 
@@ -13,13 +13,12 @@ public class AddResourceChange extends Change {
     @JsonProperty("label")
     private String label;
 
-    @JsonProperty("graph")
-    protected String graph;
-
     public AddResourceChange() {
+        super();
     }
 
-    public AddResourceChange(String iri, String classIri, String label) {
+    public AddResourceChange(String iri, String classIri, String label, String graph) {
+        super(graph);
         this.iri = iri;
         this.classIri = classIri;
         this.label = label;
@@ -29,7 +28,7 @@ public class AddResourceChange extends Change {
     public void apply(OntologyRepository repository) {
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT DATA { ");
-        if (graph != null && !graph.isBlank()) {
+        if (isGraphSpecified()) {
             sb.append("GRAPH <").append(graph).append("> { ");
         }
         if (classIri != null) {
@@ -38,7 +37,7 @@ public class AddResourceChange extends Change {
         if (label != null) {
             sb.append(String.format("<%s> <http://www.w3.org/2000/01/rdf-schema#label> \"%s\" . ", iri, label));
         }
-        if (graph != null && !graph.isBlank()) {
+        if (isGraphSpecified()) {
             sb.append("}");
         }
         sb.append(" }");
@@ -48,6 +47,9 @@ public class AddResourceChange extends Change {
 
     @Override
     public String getLogMessage() {
+        if (isGraphSpecified()) {
+            return String.format("Resource added: %s to graph %s", iri, graph);
+        }
         return String.format("Resource added: %s", iri);
     }
 }

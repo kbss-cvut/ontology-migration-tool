@@ -33,7 +33,7 @@ public class MigrationTest {
     void applyFullMigration() {
         ChangeSet cs1 = new ChangeSet("cs-1");
         cs1.setChanges(List.of(
-                new AddResourceChange("http://ex/r1", "http://ex/C1", "Label1"),
+                new AddResourceChange("http://ex/r1", "http://ex/C1", "Label1", null),
                 new AddClassChange("http://ex/C1", "ClassLabel1", null)
         ));
         ChangeSet cs2 = new ChangeSet("cs-2");

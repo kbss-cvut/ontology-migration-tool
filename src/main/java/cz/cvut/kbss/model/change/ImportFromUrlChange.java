@@ -3,13 +3,10 @@ package cz.cvut.kbss.model.change;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.repository.OntologyRepository;
 
-public class ImportFromUrlChange extends Change {
+public class ImportFromUrlChange extends ChangeWithGraph {
 
     @JsonProperty("sourceUrl")
     private String sourceUrl;
-
-    @JsonProperty("graph")
-    protected String graph;
 
     @JsonProperty("replace")
     private boolean replace;
@@ -18,14 +15,14 @@ public class ImportFromUrlChange extends Change {
     }
 
     public ImportFromUrlChange(String sourceUrl, String graph, boolean replace) {
+        super(graph);
         this.sourceUrl = sourceUrl;
-        this.graph = graph;
         this.replace = replace;
     }
 
     @Override
     public void apply(OntologyRepository repository) {
-        String targetGraph = graph == null || graph.isBlank() ? null : graph;
+        String targetGraph = isGraphSpecified() ? graph : null;
         if (replace && targetGraph != null) {
             repository.clearGraph(targetGraph);
         }
@@ -34,6 +31,9 @@ public class ImportFromUrlChange extends Change {
 
     @Override
     public String getLogMessage() {
+        if (isGraphSpecified()) {
+            return "Imported ontology from: " + sourceUrl + " to graph: <" + graph + ">";
+        }
         return "Imported ontology from: " + sourceUrl;
     }
 }
