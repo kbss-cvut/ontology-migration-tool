@@ -24,3 +24,12 @@ changeSets:
         graph: "http://example.org/Graph3"
       - type: sparqlUpdate
         query: "DELETE WHERE { ?s ?p ?o }"
+      - type: custom
+        class: "cz.cvut.kbss.stub.NoOpCustomChangeApplier"
+      - type: deleteClass
+        iri: "http://example.org/ClassToDelete"
+        graph: "http://example.org/Graph4"
+      - type: importFromUrl
+        sourceUrl: "http://example.org/source"
+        graph: "http://example.org/"
+        replace: true
