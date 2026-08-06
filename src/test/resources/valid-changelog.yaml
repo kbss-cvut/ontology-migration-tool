@@ -1,35 +1,36 @@
-changeSets:
-  - id: cs-001
-    changes:
-      - type: renameResource
-        oldIri: "http://example.org/OldResource"
-        newIri: "http://example.org/NewResource"
-        graph: "http://example.org/Graph1"
-      - type: addClass
-        iri: "http://example.org/NewClass"
-        label: "New Class"
-        graph: "http://example.org/Graph1"
-      - type: addResource
-        iri: "http://example.org/NewResource2"
-        classIri: "http://example.org/NewClass"
-        label: "Resource 2"
-        graph: "http://example.org/Graph2"
-      - type: addProperty
-        subjectIRI: "http://example.org/NewResource2"
-        propertyIRI: "http://example.org/hasProperty"
-        objectIRI: "http://example.org/Value"
-        graph: "http://example.org/Graph2"
-      - type: deleteResource
-        iri: "http://example.org/OldResourceToDelete"
-        graph: "http://example.org/Graph3"
-      - type: sparqlUpdate
-        query: "DELETE WHERE { ?s ?p ?o }"
-      - type: custom
-        class: "cz.cvut.kbss.stub.NoOpCustomChangeApplier"
-      - type: deleteClass
-        iri: "http://example.org/ClassToDelete"
-        graph: "http://example.org/Graph4"
-      - type: importFromUrl
-        sourceUrl: "http://example.org/source"
-        graph: "http://example.org/"
-        replace: true
+changelog:
+  - changeSet:
+      id: cs-001
+      changes:
+        - type: renameResource
+          oldIri: "http://example.org/OldResource"
+          newIri: "http://example.org/NewResource"
+          graph: "http://example.org/Graph1"
+        - type: addClass
+          iri: "http://example.org/NewClass"
+          label: "New Class"
+          graph: "http://example.org/Graph1"
+        - type: addResource
+          iri: "http://example.org/NewResource2"
+          classIri: "http://example.org/NewClass"
+          label: "Resource 2"
+          graph: "http://example.org/Graph2"
+        - type: addProperty
+          subjectIRI: "http://example.org/NewResource2"
+          propertyIRI: "http://example.org/hasProperty"
+          objectIRI: "http://example.org/Value"
+          graph: "http://example.org/Graph2"
+        - type: deleteResource
+          iri: "http://example.org/OldResourceToDelete"
+          graph: "http://example.org/Graph3"
+        - type: sparqlUpdate
+          query: "DELETE WHERE { ?s ?p ?o }"
+        - type: custom
+          class: "cz.cvut.kbss.stub.NoOpCustomChangeApplier"
+        - type: deleteClass
+          iri: "http://example.org/ClassToDelete"
+          graph: "http://example.org/Graph4"
+        - type: importFromUrl
+          sourceUrl: "http://example.org/source"
+          graph: "http://example.org/"
+          replace: true

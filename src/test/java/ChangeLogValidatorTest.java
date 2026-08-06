@@ -1,3 +1,5 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import cz.cvut.kbss.exception.ChangeLogValidationException;
 import cz.cvut.kbss.utils.ChangeLogValidator;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +18,7 @@ public class ChangeLogValidatorTest {
 
     @BeforeEach
     void setUp() {
-        validator = new ChangeLogValidator();
+        validator = new ChangeLogValidator(new ObjectMapper(new YAMLFactory()));
     }
 
     @Test
