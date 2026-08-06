@@ -1,7 +1,8 @@
-changeSets:
-  - id: cs-002
-    changes:
-      - type: renameResource
-        oldIri: "http://example.org/OldResource"
-      - type: addClass
-        label: "Missing URI"
+changelog:
+  - changeSet:
+      id: cs-002
+      changes:
+        - type: renameResource
+          oldIri: "http://example.org/OldResource"
+        - type: addClass
+          label: "Missing URI"
