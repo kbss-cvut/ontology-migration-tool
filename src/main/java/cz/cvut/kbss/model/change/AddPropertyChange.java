@@ -3,6 +3,8 @@ package cz.cvut.kbss.model.change;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.cvut.kbss.repository.OntologyRepository;
 
+import java.util.Objects;
+
 /**
  * Creates a new statement {@code <subjectIRI> <propertyIRI> <objectIRI>} in the target graph.
  */
@@ -36,9 +38,13 @@ public class AddPropertyChange extends ChangeWithGraph {
         if (isGraphSpecified()) {
             sb.append("GRAPH <").append(graph).append("> { ");
         }
-        if (subjectIRI != null && propertyIRI != null && objectIRI != null) {
-            sb.append(String.format("<%s> <%s> <%s> . ", subjectIRI, propertyIRI, objectIRI));
-        }
+
+        Objects.requireNonNull(subjectIRI, "Subject must not be null!");
+        Objects.requireNonNull(propertyIRI, "Property must not be null!");
+        Objects.requireNonNull(objectIRI, "Object must not be null!");
+
+        sb.append(String.format("<%s> <%s> <%s> . ", subjectIRI, propertyIRI, objectIRI));
+
         if (isGraphSpecified()) {
             sb.append("}");
         }

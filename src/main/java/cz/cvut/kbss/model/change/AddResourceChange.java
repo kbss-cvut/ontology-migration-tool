@@ -1,6 +1,7 @@
 package cz.cvut.kbss.model.change;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import cz.cvut.kbss.exception.MigrationExecutionException;
 import cz.cvut.kbss.repository.OntologyRepository;
 
 /**
@@ -8,6 +9,7 @@ import cz.cvut.kbss.repository.OntologyRepository;
  * <p>
  * Optionally inserts the resource type using {@link #classIri} and a human-readable label
  * using {@link #label}.
+ * At least one of {@link #classIri} or {@link #label} must be specified.
  */
 public class AddResourceChange extends ChangeWithGraph {
     @JsonProperty("iri")
@@ -36,6 +38,9 @@ public class AddResourceChange extends ChangeWithGraph {
         sb.append("INSERT DATA { ");
         if (isGraphSpecified()) {
             sb.append("GRAPH <").append(graph).append("> { ");
+        }
+        if (classIri == null && label == null) {
+            throw new MigrationExecutionException("At least classIri or label must be specified!");
         }
         if (classIri != null) {
             sb.append(String.format("<%s> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <%s> . ", iri, classIri));
