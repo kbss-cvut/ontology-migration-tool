@@ -49,12 +49,17 @@ public class ChangeLogLoader {
      */
     public ChangeLog loadChangelog() {
         LOG.debug("Loading root changelog: {}", changelogFile);
-        final JsonNode validData = loadAndValidateChangelog(loadClassPathFileContents(changelogFile),
+        final JsonNode validData = parseAndValidateChangelog(loadClassPathFileContents(changelogFile),
                 Path.of(changelogFile));
         unpackWrappers(validData);
         return yamlMapper.convertValue(validData, ChangeLog.class);
     }
 
+    /**
+     * Replaces ChangeSetWrappers with direct ChangeSet objects.
+     *
+     * @param changelog flattened changelog to process
+     */
     private void unpackWrappers(JsonNode changelog) {
         ArrayNode changeSets = (ArrayNode) changelog.get(AdditionalFileType.CHANGELOG.getTopLevelKey());
         for (int i = 0; i < changeSets.size(); i++) {
@@ -66,13 +71,14 @@ public class ChangeLogLoader {
     /**
      * Validates and loads the given content of a change log file.
      * <p>
-     * Processes changeSet and fileInclude wrappers and loads included files.
+     * Processes changeSet and fileInclude wrappers and loads included files,
+     * changeSet wrappers are kept in place.
      *
      * @param content the content of the changelog file
      * @param changelogPath the path to the changelog file for relative path resolving
      * @return validated changelog with included changelogs, wrappers were preserved
      */
-    private JsonNode loadAndValidateChangelog(String content, Path changelogPath) {
+    private JsonNode parseAndValidateChangelog(String content, Path changelogPath) {
         LOG.debug("Loading changelog file {}", changelogPath);
         final JsonNode changelog = validator.validate(content);
         final ArrayNode entries = (ArrayNode) changelog.get(AdditionalFileType.CHANGELOG.getTopLevelKey());
@@ -96,10 +102,6 @@ public class ChangeLogLoader {
         return changelog;
     }
 
-    private JsonNode loadInlineChangeSet(JsonNode changeSetWrapper) {
-        return changeSetWrapper.get(AdditionalFileType.CHANGESET.getTopLevelKey());
-    }
-
     private void loadAndValidateIncludedFile(ArrayNode changelogEntries, int index, Path changelogPath) {
         final JsonNode includeWrapper = changelogEntries.get(index);
         final FileInclude include = yamlMapper.convertValue(includeWrapper.get("include"), FileInclude.class);
@@ -110,12 +112,12 @@ public class ChangeLogLoader {
         final String contents = loadClassPathFileContents(newPath.toString());
         switch (resolveFileContentType(contents, newPath)) {
             case CHANGESET ->  {
-                JsonNode changeSet = loadAndValidateChangeSet(contents, newPath);
+                JsonNode changeSet = parseAndValidateChangeSet(contents, newPath);
                 // replacing the original include wrapper
                 changelogEntries.set(index, changeSet);
             }
             case CHANGELOG ->  {
-                ArrayNode includedChangelog = (ArrayNode) loadAndValidateChangelog(contents, newPath)
+                ArrayNode includedChangelog = (ArrayNode) parseAndValidateChangelog(contents, newPath)
                         .get(AdditionalFileType.CHANGELOG.getTopLevelKey());
 
                 // inserting all entries from the included changelog into the current one
@@ -148,6 +150,15 @@ public class ChangeLogLoader {
         array.addAll(new ArrayNode(yamlMapper.getNodeFactory(), newChildren));
     }
 
+    /**
+     * Probe the given file contents and resolve {@link AdditionalFileType} based on first field name.
+     * <p>
+     * Starts parsing file contents until first field name is reached.
+     *
+     * @param fileContents file contents to probe
+     * @param filePath file path to report in exception when type is not found
+     * @return resolved {@link AdditionalFileType}
+     */
     private AdditionalFileType resolveFileContentType(String fileContents, Path filePath) {
         try (JsonParser parser = yamlMapper.getFactory().createParser(fileContents)) {
             while (parser.nextToken() != null) {
@@ -162,7 +173,7 @@ public class ChangeLogLoader {
         throw new ChangeLogReadingException("Unable to determine included file type: " + filePath.toString());
     }
 
-    private JsonNode loadAndValidateChangeSet(String contents, Path path) {
+    private JsonNode parseAndValidateChangeSet(String contents, Path path) {
         LOG.debug("Loading change set file {}", path);
         return validator.validateChangeSet(contents);
     }
