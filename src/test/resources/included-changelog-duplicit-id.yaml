@@ -1,0 +1,12 @@
+changelog:
+  - changeSet:
+      id: Identifier
+      changes:
+        - type: sparqlUpdate
+          query: "DELETE WHERE { ?s ?p ?o }"
+  - changeSet:
+      id: DifferentIdentifier
+      changes:
+        - type: deleteClass
+          iri: "http://example.org/ClassToDelete"
+          graph: "http://example.org/Graph4"

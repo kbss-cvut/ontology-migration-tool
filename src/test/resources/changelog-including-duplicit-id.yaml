@@ -1,0 +1,10 @@
+changelog:
+  - changeSet:
+      id: DifferentIdentifier
+      changes:
+        - type: addClass
+          iri: "http://example.org/NewClass"
+          label: "New Class"
+          graph: "http://example.org/Graph1"
+  - include:
+      file: included-changelog-duplicit-id.yaml

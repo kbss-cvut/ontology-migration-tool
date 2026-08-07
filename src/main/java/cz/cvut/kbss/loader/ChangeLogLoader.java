@@ -52,7 +52,9 @@ public class ChangeLogLoader {
         final JsonNode validData = parseAndValidateChangelog(loadClassPathFileContents(changelogFile),
                 Path.of(changelogFile));
         unpackWrappers(validData);
-        return yamlMapper.convertValue(validData, ChangeLog.class);
+        ChangeLog result = yamlMapper.convertValue(validData, ChangeLog.class);
+        validator.validate(result);
+        return result;
     }
 
     /**
