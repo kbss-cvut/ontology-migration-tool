@@ -10,12 +10,17 @@ import com.networknt.schema.SpecVersion;
 import com.networknt.schema.ValidationMessage;
 import cz.cvut.kbss.exception.ChangeLogReadingException;
 import cz.cvut.kbss.exception.ChangeLogValidationException;
+import cz.cvut.kbss.exception.IdentifierNotUniqueException;
 import cz.cvut.kbss.exception.OntologyMigrationToolException;
+import cz.cvut.kbss.model.ChangeLog;
+import cz.cvut.kbss.model.ChangeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class ChangeLogValidator {
@@ -116,6 +121,30 @@ public class ChangeLogValidator {
             return jsonNode;
         } catch (JsonProcessingException e) {
             throw new ChangeLogReadingException("Unable to read input for validation.", e);
+        }
+    }
+
+    /**
+     * Validate deserialized changelog
+     *
+     * @param changeLog changelog to validate
+     */
+    public void validate(ChangeLog changeLog) {
+        ensureChangeSetIdsUnique(changeLog);
+    }
+
+    /**
+     * Ensures that each {@link ChangeSet#id} is unique within the changelog
+     * @param changeLog changelog to iterate
+     */
+    private void ensureChangeSetIdsUnique(ChangeLog changeLog) {
+        List<ChangeSet> changeSets = changeLog.getChangeSets();
+        Set<String> ids = new HashSet<>();
+
+        for (ChangeSet changeSet : changeSets) {
+            if (!ids.add(changeSet.getId())) {
+                throw new IdentifierNotUniqueException("ChangeSet ID is not unique: " + changeSet.getId());
+            }
         }
     }
 }

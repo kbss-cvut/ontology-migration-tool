@@ -1,6 +1,7 @@
 package cz.cvut.kbss.loader;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import cz.cvut.kbss.exception.IdentifierNotUniqueException;
 import cz.cvut.kbss.model.ChangeLog;
 import cz.cvut.kbss.model.ChangeSet;
 import cz.cvut.kbss.model.change.*;
@@ -69,13 +70,19 @@ class ChangeLogLoaderTest {
         final ChangeLog changeLog = assertDoesNotThrow(loader::loadChangelog);
         assertNotNull(changeLog);
 
-        final int expectedChangeSetCount = 6;
+        final int expectedChangeSetCount = 5;
         assertEquals(expectedChangeSetCount, changeLog.getChangeSets().size());
 
         final int expectedChangeCount = 2 + // directly in nested/valid-nested-changelog.yaml
-                1 + // nested/subdirectory/nested-changeset.yaml
                 2 + // nested/subdirectory/nested-changelog.yaml
                 9; // valid-changelog.yaml
         assertEquals(expectedChangeCount, changeLog.getChangeSets().stream().map(ChangeSet::getChanges).mapToLong(List::size).sum());
+    }
+
+    @Test
+    void loadChangeLogWithDuplicitChangeSetIdThrows() {
+        ChangeLogLoader loader = new ChangeLogLoader("changelog-including-duplicit-id.yaml");
+        final Exception ex = assertThrowsExactly(IdentifierNotUniqueException.class, loader::loadChangelog);
+        assertTrue(ex.getMessage().contains("DifferentIdentifier"));
     }
 }
