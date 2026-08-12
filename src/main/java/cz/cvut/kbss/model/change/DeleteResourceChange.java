@@ -30,6 +30,7 @@ public class DeleteResourceChange extends ChangeWithGraph {
     String deleteQuery() {
         if (isGraphSpecified()) {
             return String.format("DELETE WHERE { GRAPH <%1$s> { <%2$s> ?p ?o } }; " +
+                                    "DELETE WHERE { GRAPH <%1$s> { ?s <%2$s> ?o } }; " +
                                          "DELETE WHERE { GRAPH <%1$s> { ?s ?p <%2$s> } }; ", graph, iri);
         }
         return
