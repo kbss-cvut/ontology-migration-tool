@@ -1,6 +1,7 @@
 package integration;
 
 import cz.cvut.kbss.repository.TransactionalRepository;
+import org.eclipse.rdf4j.rio.RDFFormat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,7 @@ public class TestRepository implements TransactionalRepository {
     }
 
     @Override
-    public void importFromUrl(String url, String graph) {
+    public void importFromUrl(String url, String graph, RDFFormat format) {
         assertTrue(transactionActive);
     }
 

@@ -1,7 +1,10 @@
 package cz.cvut.kbss.model.change;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import cz.cvut.kbss.exception.UnknownRdfFormat;
 import cz.cvut.kbss.repository.OntologyRepository;
+import org.eclipse.rdf4j.rio.RDFFormat;
+import org.eclipse.rdf4j.rio.Rio;
 
 /**
  * Imports RDF data from {@link #sourceUrl} into the given {@link #graph}.
@@ -17,13 +20,24 @@ public class ImportFromUrlChange extends ChangeWithGraph {
     @JsonProperty("replace")
     private boolean replace;
 
+    @JsonProperty("mimeType")
+    private String mimeType;
+
     public ImportFromUrlChange() {
     }
 
-    public ImportFromUrlChange(String sourceUrl, String graph, boolean replace) {
+    public ImportFromUrlChange(String sourceUrl, String graph, boolean replace, String mimeType) {
         super(graph);
         this.sourceUrl = sourceUrl;
         this.replace = replace;
+        this.mimeType = mimeType;
+    }
+
+    protected RDFFormat resolveFormat() {
+        if (mimeType == null || mimeType.isBlank())  {
+            return null;
+        }
+        return Rio.getParserFormatForMIMEType(mimeType).orElseThrow(() -> new UnknownRdfFormat(mimeType));
     }
 
     @Override
@@ -32,7 +46,7 @@ public class ImportFromUrlChange extends ChangeWithGraph {
         if (replace && targetGraph != null) {
             repository.clearGraph(targetGraph);
         }
-        repository.importFromUrl(sourceUrl, targetGraph);
+        repository.importFromUrl(sourceUrl, targetGraph, resolveFormat());
     }
 
     @Override

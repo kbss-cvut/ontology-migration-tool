@@ -111,29 +111,29 @@ public class ExecutorTest {
     @Test
     void importFromUrlChangePassesSourceUrlAndTargetGraphToRepository() {
         final String ontoIri = "http://example.com/ontology";
-        final ImportFromUrlChange change = new ImportFromUrlChange(ontoIri, ontoIri, false);
+        final ImportFromUrlChange change = new ImportFromUrlChange(ontoIri, ontoIri, false, null);
         repository.begin();
         change.apply(repository);
-        verify(repository).importFromUrl(ontoIri, ontoIri);
+        verify(repository).importFromUrl(ontoIri, ontoIri, null);
     }
 
     @Test
     void importFromUrlPassesNullAsTargetGraphWhenItIsNotSpecified() {
         final String ontoIri = "http://example.com/ontology";
-        final ImportFromUrlChange change = new ImportFromUrlChange(ontoIri, null, false);
+        final ImportFromUrlChange change = new ImportFromUrlChange(ontoIri, null, false, null);
         repository.begin();
         change.apply(repository);
-        verify(repository).importFromUrl(ontoIri, null);
+        verify(repository).importFromUrl(ontoIri, null, null);
     }
 
     @Test
     void importFromUrlClearsTargetGraphWhenReplaceIsSpecified() {
         final String ontoIri = "http://example.com/ontology";
-        final ImportFromUrlChange change = new ImportFromUrlChange(ontoIri, ontoIri, true);
+        final ImportFromUrlChange change = new ImportFromUrlChange(ontoIri, ontoIri, true, null);
         repository.begin();
         change.apply(repository);
         verify(repository).clearGraph(ontoIri);
-        verify(repository).importFromUrl(ontoIri, ontoIri);
+        verify(repository).importFromUrl(ontoIri, ontoIri, null);
     }
 
     @Test

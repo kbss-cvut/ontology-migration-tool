@@ -32,5 +32,6 @@ changelog:
           graph: "http://example.org/Graph4"
         - type: importFromUrl
           sourceUrl: "http://example.org/source"
+          mimeType: "application/ld+json"
           graph: "http://example.org/"
           replace: true

@@ -8,6 +8,7 @@ import org.eclipse.rdf4j.query.Update;
 import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
 import org.eclipse.rdf4j.repository.http.HTTPRepository;
+import org.eclipse.rdf4j.rio.RDFFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,14 +94,14 @@ public class Rdf4jRepository implements TransactionalRepository {
     }
 
     @Override
-    public void importFromUrl(String url, String graph) {
+    public void importFromUrl(String url, String graph, RDFFormat format) {
         assert conn != null && conn.isActive();
         LOG.trace("Importing data from <{}> into repository context <{}>", url, graph);
         try {
             if (graph != null) {
-                conn.add(new URL(url), Values.iri(graph));
+                conn.add(new URL(url), format, Values.iri(graph));
             } else {
-                conn.add(new URL(url));
+                conn.add(new URL(url), format);
             }
         } catch (MalformedURLException e) {
             throw new IllegalArgumentException("Invalid URL: " + url, e);

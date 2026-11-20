@@ -260,6 +260,9 @@
             },
             "replace": {
               "type": "boolean"
+            },
+            "mimeType": {
+              "type": "string"
             }
           },
           "additionalProperties": false
